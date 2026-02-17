@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Navigation Bar Page</title>
+    <link rel="stylesheet" href="nave.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">MyWebsite</div>
+            <ul>
+                <li><a href="bar.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a class="active" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you! Get in touch with us using the information below or fill out the contact form.</p>
+        
+        <section>
+            <h2>Contact Information</h2>
+            <p><strong>Email:</strong> info@mywebsite.com</p>
+            <p><strong>Phone:</strong> (123) 456-7890</p>
+            <p><strong>Address:</strong> 123 Web Street, Internet City, IC 12345</p>
+        </section>
+        
+        <section>
+            <h2>Send us a Message</h2>
+            <form>
+                <div>
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" name="name" required style="width: 300px; padding: 8px; margin-top: 5px;">
+                </div>
+                <br>
+                <div>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" required style="width: 300px; padding: 8px; margin-top: 5px;">
+                </div>
+                <br>
+                <div>
+                    <label for="message">Message:</label><br>
+                    <textarea id="message" name="message" rows="5" required style="width: 300px; padding: 8px; margin-top: 5px;"></textarea>
+                </div>
+                <br>
+                <button type="submit" style="padding: 10px 20px; background-color: #04AA6D; color: white; border: none; cursor: pointer;">Send Message</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

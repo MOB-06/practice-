@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="attr-selector.css">
+</head>
+<body bgcolor="#CDCDCD">
+    <h2>1. Presence Selector Example: <code>[disabled]</code></h2>
+ <input type="text" value="Disabled Field" disabled>
+ <input type="text" value="Enabled Field">
+ <hr>
+ <h2>2. Exact Match Selector Example: <code>[data-action="delete"]</code></h2>
+ <button data-action="delete">Delete Record</button>
+ <button data-action="save">Save Changes</button>
+ <hr>
+ <h2>3. Starts With Selector Example: <code>a[href^="mailto:"]</code></h2>
+ <p><a href="mailto:support@example.com">Contact Support</a></p>
+ <p><a href="https://youtu.be/dQw4w9WgXcQ?si=1NllQdyr3aNkgaVS">Visit Website</a></p>
+ <hr>
+ <h2>4. Space-Separated Word Example: <code>[data-status~="urgent"]</code></h2>
+ <div data-status="new critical urgent">Task A: Server Issue</div>
+ 
+ <div data-status="resolved nonurgent">Task B: Documentation</div>
+ <hr>
+   <h2>5. Contains Selector Example: <code>[data-id*="user"]</code></h2>
+ <div data-id="admin-user-001">Admin User Area</div>
+ <div data-id="user-report-002">Standard User Report</div>
+ <div data-id="guest-session-003">Guest Session</div>
+    
+</body>
+</html>

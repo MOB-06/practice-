@@ -1,0 +1,37 @@
+* {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 3px;
+}
+/* Page container */
+.container {
+ width: 900px;
+ margin: 20px auto;
+ border: 2px solid #044a11;
+}
+/* Header */
+.header {
+ background: #44d8c2;
+ color: white;
+ text-align: center;
+ padding: 20px;
+}
+/* Clearfix */
+.content::after {
+ content: "";
+ display: block;
+ clear: both;
+}
+/* Sidebar */
+.sidebar {
+ width: 25%;
+ float: left;
+ background: #ac6c26;
+ padding: 15px;
+}
+/* Main content */
+.main {
+ width: 75%;
+ float: left;
+ padding: 15px;
+}
