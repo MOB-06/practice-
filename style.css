@@ -1,0 +1,17 @@
+body{
+    background-color: thistle;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+form{
+    background-color: rgb(120, 134, 131);
+    padding: 60px;
+    border-radius: 10px;
+    width: 400px;
+    margin: auto;
+    box-shadow: 3px 3px 3px;
+}
+legend{
+    text-align: center;
+}

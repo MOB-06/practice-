@@ -1,0 +1,56 @@
+/* Styling the first letter of the paragraph */
+
+p.intro::first-letter {
+
+font-size: 1.5Sem; 
+ color: #007bff;
+font-weight: bold;
+
+}
+
+
+
+/* Styling the first line of the paragraph */
+
+p.intro::first-line {
+
+ color: #157543;
+
+ font-style: italic;
+
+}
+
+
+
+/* Adding content before the paragraph */
+
+ p.intro::before {
+
+ content: "Note: ";
+
+ color: #dc3545;
+
+font-weight: bold;
+
+}
+
+
+/*Styling the placeholder text of the input field */
+
+input::placeholder {
+
+color: #6c757d;
+
+font-style: italic;
+
+}
+
+/* Styling selected text */
+
+ ::selection {
+
+ background-color: #ffc107;
+
+color: black;
+
+}

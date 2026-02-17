@@ -1,0 +1,37 @@
+/* 1. Presence Selector: [attr] */
+ /* Targets any element that has the 'disabled' attribute. */
+ [disabled] {
+ border: 2px dashed #0b0a0a;
+ background-color: #d94646;
+ color: #f5ecec;
+ cursor: not-allowed;
+ }
+ /*2.exact match selector: [attr= "value"
+/* Targets only the button whose 'data-action' attribute is EXACTLY "delete". */
+ button[data-action="delete"] {
+ background-color: #d9534f; /* Red */
+ color: white;
+ border: none;
+ padding: 8px 15px;
+ border-radius: 4px;
+ }
+ /* 3. Starts With Selector: [attr^="value"] */
+ /* Targets links whose 'href' attribute starts with "mailto:". */
+ a[href^="mailto:"] {
+ color: #007bff; /* Blue */
+ font-weight: bold;
+ text-decoration: underline dotted;
+ }
+ /* 4. Space-Separated Word Selector: [attr~="value"] */
+ /* Targets elements whose 'data-status' attribute contains the whole word "urgent". */
+ [data-status~="urgent"] {
+ background-color: #50cbbb5b; /* Yellow highlight */
+ border: 3px solid #171714;
+ padding: 5px;
+ margin-bottom: 10px;
+ }
+ /* 5. Contains Selector: [attr*="value"] */
+ /* Targets elements whose 'data-id' attribute contains the substring "user". */
+ [data-id*="user"] {
+ font-style: italic;
+ }

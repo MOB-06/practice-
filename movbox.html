@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving  ball Animated Box</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: moveBox 4s ease-in-out infinite, rotate 4s linear infinite;
+            position: relative;
+            border-radius: 50%;
+        }
+
+        @keyframes moveBox {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(200px, -100px) rotate(90deg);
+            }
+            50% {
+                transform: translate(200px, 100px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-200px, 100px) rotate(270deg);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                filter: hue-rotate(50deg);
+            }
+            to {
+                filter: hue-rotate(3deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>

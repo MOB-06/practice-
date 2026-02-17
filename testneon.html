@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEON ARENA - Ultimate Survival</title>
+    <style>
+        /* ============================================
+           RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* ============================================
+           GAME CANVAS & ARENA
+           ============================================ */
+        #gameCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0a0a1f 0%, #000 100%);
+            display: none;
+        }
+
+        /* Animated grid background */
+        #gameCanvas::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridScroll 2s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridScroll {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* ============================================
+           START MENU
+           ============================================ */
+        #startMenu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a0a2e 0%, #000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s;
+        }
+
+        #startMenu h1 {
+            font-size: 72px;
+            text-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff, 0 0 80px #f0f;
+            margin-bottom: 20px;
+            animation: titleGlow 2s ease-in-out infinite;
+            letter-spacing: 8px;
+        }
+
+        #startMenu .subtitle {
+            font-size: 24px;
+            color: #0ff;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px #0ff;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        .input-group input {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid #0ff;
+            border-radius: 10px;
+            color: #fff;
+            text-align: center;
+            width: 300px;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            box-shadow: 0 0 30px #0ff;
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        .menu-btn {
+            padding: 15px 50px;
+            font-size: 24px;
+            background: linear-gradient(45deg, #f0f, #0ff);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
+            transition: all 0.3s;
+            margin: 10px;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(255, 0, 255, 0.9);
+        }
+
+        .menu-btn.secondary {
+            background: linear-gradient(45deg, #0ff, #00f);
+        }
+
+        /* ============================================
+           HUD (Heads Up Display)
+           ============================================ */
+        #hud {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            display: none;
+            padding: 20px;
+        }
+
+        .hud-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #score {
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #0ff;
+            color: #0ff;
+        }
+
+        #healthBarContainer {
+            width: 300px;
+        }
+
+        #healthBar {
+            width: 100%;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #0ff;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #healthFill {
+            height: 100%;
+            background: linear-gradient(90deg, #f00, #ff0, #0f0);
+            transition: width 0.3s;
+            box-shadow: 0 0 20px #0f0;
+        }
+
+        #healthText {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #000;
+        }
+
+        #powerUpsContainer {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .powerup-indicator {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            border: 2px solid;
+            position: relative;
+            animation: pulse 0.5s ease-in-out infinite;
+        }
+
+        .powerup-indicator.shield {
+            background: rgba(0, 255, 0, 0.3);
+            border-color: #0f0;
+            box-shadow: 0 0 20px #0f0;
+        }
+
+        .powerup-indicator.timewarp {
+            background: rgba(0, 100, 255, 0.3);
+            border-color: #0af;
+            box-shadow: 0 0 20px #0af;
+        }
+
+        .powerup-indicator.overcharge {
+            background: rgba(255, 100, 0, 0.3);
+            border-color: #f80;
+            box-shadow: 0 0 20px #f80;
+        }
+
+        .powerup-timer {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #fff;
+            text-shadow: 0 0 5px #000;
+        }
+
+        /* ============================================
+           BOSS HUD
+           ============================================ */
+        #bossHud {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            display: none;
+            z-index: 101;
+        }
+
+        #bossName {
+            text-align: center;
+            font-size: 24px;
+            color: #f0f;
+            text-shadow: 0 0 10px #f0f;
+            margin-bottom: 10px;
+            animation: titleGlow 1s ease-in-out infinite;
+        }
+
+        #bossHealthBar {
+            width: 100%;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid #f0f;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #bossHealthFill {
+            height: 100%;
+            background: linear-gradient(90deg, #f00, #f0f);
+            transition: width 0.3s;
+            box-shadow: 0 0 30px #f0f;
+        }
+
+        /* ============================================
+           PAUSE MENU
+           ============================================ */
+        #pauseMenu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            padding: 50px;
+            border: 3px solid #0ff;
+            border-radius: 20px;
+            box-shadow: 0 0 50px #0ff;
+            display: none;
+            z-index: 200;
+            text-align: center;
+        }
+
+        #pauseMenu h2 {
+            font-size: 48px;
+            color: #0ff;
+            text-shadow: 0 0 20px #0ff;
+            margin-bottom: 30px;
+        }
+
+        /* ============================================
+           GAME OVER SCREEN
+           ============================================ */
+        #gameOverScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 300;
+            animation: fadeIn 0.5s;
+        }
+
+        #gameOverScreen h2 {
+            font-size: 64px;
+            color: #f00;
+            text-shadow: 0 0 30px #f00;
+            margin-bottom: 20px;
+            animation: shake 0.5s;
+        }
+
+        #gameOverStats {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #0ff;
+        }
+
+        /* ============================================
+           LEADERBOARD
+           ============================================ */
+        #leaderboard {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            padding: 40px;
+            border: 3px solid #0ff;
+            border-radius: 20px;
+            box-shadow: 0 0 50px #0ff;
+            display: none;
+            z-index: 400;
+            min-width: 500px;
+        }
+
+        #leaderboard h2 {
+            text-align: center;
+            color: #0ff;
+            font-size: 36px;
+            text-shadow: 0 0 20px #0ff;
+            margin-bottom: 30px;
+        }
+
+        .leaderboard-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 5px;
+            animation: slideIn 0.3s;
+        }
+
+        .leaderboard-entry.highlight {
+            background: rgba(255, 0, 255, 0.3);
+            border: 2px solid #f0f;
+        }
+
+        /* ============================================
+           SETTINGS MENU
+           ============================================ */
+        #settingsMenu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            padding: 40px;
+            border: 3px solid #0ff;
+            border-radius: 20px;
+            box-shadow: 0 0 50px #0ff;
+            display: none;
+            z-index: 400;
+            min-width: 400px;
+        }
+
+        .setting-item {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-btn {
+            padding: 10px 20px;
+            background: #0ff;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .toggle-btn.active {
+            background: #0f0;
+        }
+
+        /* ============================================
+           FPS COUNTER
+           ============================================ */
+        #fpsCounter {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: #0ff;
+            text-shadow: 0 0 5px #000;
+            z-index: 500;
+            display: none;
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+            50% { text-shadow: 0 0 30px #0ff, 0 0 60px #0ff, 0 0 90px #0ff; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ============================================
+           CAMERA SHAKE
+           ============================================ */
+        .camera-shake {
+            animation: cameraShake 0.3s;
+        }
+
+        @keyframes cameraShake {
+            0%, 100% { transform: translate(0, 0); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 5px); }
+            20%, 40%, 60%, 80% { transform: translate(5px, -5px); }
+        }
+
+        /* Screen flash effect */
+        .screen-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            animation: flash 0.3s;
+            z-index: 999;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- START MENU -->
+    <div id="startMenu">
+        <h1>⚡ NEON ARENA ⚡</h1>
+        <div class="subtitle">ULTIMATE SURVIVAL</div>
+        <div class="input-group">
+            <input type="text" id="playerName" placeholder="Enter Your Name" maxlength="20">
+        </div>
+        <button class="menu-btn" id="startGameBtn">START GAME</button>
+        <button class="menu-btn secondary" id="viewLeaderboardBtn">LEADERBOARD</button>
+        <button class="menu-btn secondary" id="settingsBtn">SETTINGS</button>
+    </div>
+
+    <!-- GAME CANVAS -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- HUD -->
+    <div id="hud">
+        <div class="hud-top">
+            <div id="score">SCORE: 0</div>
+            <div id="healthBarContainer">
+                <div id="healthBar">
+                    <div id="healthFill"></div>
+                    <div id="healthText">100 / 100</div>
+                </div>
+                <div id="powerUpsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOSS HUD -->
+    <div id="bossHud">
+        <div id="bossName">BOSS NAME</div>
+        <div id="bossHealthBar">
+            <div id="bossHealthFill"></div>
+        </div>
+    </div>
+
+    <!-- PAUSE MENU -->
+    <div id="pauseMenu">
+        <h2>PAUSED</h2>
+        <button class="menu-btn" id="resumeBtn">RESUME</button>
+        <button class="menu-btn secondary" id="mainMenuBtn">MAIN MENU</button>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div id="gameOverScreen">
+        <h2>GAME OVER</h2>
+        <div id="gameOverStats"></div>
+        <button class="menu-btn" id="playAgainBtn">PLAY AGAIN</button>
+        <button class="menu-btn secondary" id="viewLeaderboardBtn2">LEADERBOARD</button>
+        <button class="menu-btn secondary" id="backToMenuBtn">MAIN MENU</button>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div id="leaderboard">
+        <h2>🏆 LEADERBOARD 🏆</h2>
+        <div id="leaderboardList"></div>
+        <button class="menu-btn" id="closeLeaderboardBtn" style="margin-top: 20px;">CLOSE</button>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settingsMenu">
+        <h2 style="text-align: center; color: #0ff; margin-bottom: 20px;">SETTINGS</h2>
+        <div class="setting-item">
+            <span>Sound Effects:</span>
+            <button class="toggle-btn active" id="soundToggle">ON</button>
+        </div>
+        <div class="setting-item">
+            <span>Music:</span>
+            <button class="toggle-btn active" id="musicToggle">ON</button>
+        </div>
+        <div class="setting-item">
+            <span>Screen Shake:</span>
+            <button class="toggle-btn active" id="shakeToggle">ON</button>
+        </div>
+        <div class="setting-item">
+            <span>Show FPS:</span>
+            <button class="toggle-btn" id="fpsToggle">OFF</button>
+        </div>
+        <div class="setting-item">
+            <span>Debug Mode:</span>
+            <button class="toggle-btn" id="debugToggle">OFF</button>
+        </div>
+        <button class="menu-btn" id="closeSettingsBtn" style="margin-top: 20px; width: 100%;">CLOSE</button>
+    </div>
+
+    <!-- FPS COUNTER -->
+    <div id="fpsCounter">FPS: 60</div>
+
+    <script>
+        // ============================================
+        // GAME CONSTANTS & CONFIGURATION
+        // ============================================
+        const CONFIG = {
+            PLAYER_SIZE: 40,
+            PLAYER_SPEED: 5,
+            PLAYER_FRICTION: 0.85,
+            PLAYER_ACCELERATION: 0.8,
+            MAX_HEALTH: 100,
+            OBSTACLE_BASE_SPEED: 2,
+            ENEMY_SPEED: 1.5,
+            BOSS_SCORE_INTERVAL: 500,
+            POWERUP_DURATION: 8000,
+            INVINCIBILITY_DURATION: 1000
+        };
+
+        // ============================================
+        // GAME STATE MANAGEMENT
+        // ============================================
+        const GAME_STATES = {
+            MENU: 'MENU',
+            PLAYING: 'PLAYING',
+            BOSS: 'BOSS',
+            PAUSED: 'PAUSED',
+            GAME_OVER: 'GAME_OVER'
+        };
+
+        let gameState = GAME_STATES.MENU;
+        let canvas, ctx;
+        let player, enemies, obstacles, powerUps, particles, boss;
+        let score, health, keys, settings, leaderboardData;
+        let animationId, lastTime, fps;
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        function init() {
+            canvas = document.getElementById('gameCanvas');
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            loadSettings();
+            loadLeaderboard();
+            loadPlayerName();
+            setupEventListeners();
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        // ============================================
+        // PLAYER CLASS
+        // ============================================
+        class Player {
+            constructor() {
+                this.x = canvas.width / 2;
+                this.y = canvas.height / 2;
+                this.vx = 0;
+                this.vy = 0;
+                this.size = CONFIG.PLAYER_SIZE;
+                this.speed = CONFIG.PLAYER_SPEED;
+                this.invincible = false;
+                this.invincibleTimer = 0;
+            }
+
+            update() {
+                // Movement with acceleration
+                if (keys['w'] || keys['ArrowUp']) this.vy -= CONFIG.PLAYER_ACCELERATION;
+                if (keys['s'] || keys['ArrowDown']) this.vy += CONFIG.PLAYER_ACCELERATION;
+                if (keys['a'] || keys['ArrowLeft']) this.vx -= CONFIG.PLAYER_ACCELERATION;
+                if (keys['d'] || keys['ArrowRight']) this.vx += CONFIG.PLAYER_ACCELERATION;
+
+                // Apply friction
+                this.vx *= CONFIG.PLAYER_FRICTION;
+                this.vy *= CONFIG.PLAYER_FRICTION;
+
+                // Limit speed
+                const maxSpeed = this.speed * (player.hasOvercharge ? 1.5 : 1);
+                const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                if (speed > maxSpeed) {
+                    this.vx = (this.vx / speed) * maxSpeed;
+                    this.vy = (this.vy / speed) * maxSpeed;
+                }
+
+                // Update position
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Boundary collision
+                this.x = Math.max(this.size, Math.min(canvas.width - this.size, this.x));
+                this.y = Math.max(this.size, Math.min(canvas.height - this.size, this.y));
+
+                // Update invincibility
+                if (this.invincible) {
+                    this.invincibleTimer--;
+                    if (this.invincibleTimer <= 0) {
+                        this.invincible = false;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.save();
+                
+                // Invincibility flicker
+                if (this.invincible && Math.floor(this.invincibleTimer / 5) % 2 === 0) {
+                    ctx.globalAlpha = 0.5;
+                }
+
+                // Glow effect
+                const glowColor = this.hasShield ? '#0f0' : this.hasOvercharge ? '#f80' : '#0ff';
+                ctx.shadowBlur = 30;
+                ctx.shadowColor = glowColor;
+
+                // Draw box body
+                ctx.fillStyle = glowColor;
+                ctx.fillRect(this.x - this.size/2, this.y - this.size/2, this.size, this.size);
+
+                // Draw smile face
+                ctx.fillStyle = '#000';
+                // Eyes
+                ctx.fillRect(this.x - 12, this.y - 8, 8, 8);
+                ctx.fillRect(this.x + 4, this.y - 8, 8, 8);
+                // Smile
+                ctx.beginPath();
+                ctx.arc(this.x, this.y + 5, 12, 0, Math.PI);
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#000';
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            takeDamage(amount) {
+                if (this.invincible || this.hasShield) return;
+                
+                health -= amount;
+                this.invincible = true;
+                this.invincibleTimer = CONFIG.INVINCIBILITY_DURATION / 16;
+                
+                updateHealthBar();
+                playSound('hit');
+                
+                if (settings.screenShake) {
+                    cameraShake();
+                }
+                
+                if (health <= 0) {
+                    gameOver();
+                }
+            }
+        }
+
+        // ============================================
+        // OBSTACLE CLASS
+        // ============================================
+        class Obstacle {
+            constructor() {
+                const side = Math.floor(Math.random() * 4);
+                this.size = 30 + Math.random() * 30;
+                this.speed = CONFIG.OBSTACLE_BASE_SPEED + Math.random() * 2;
+                this.type = ['block', 'spike', 'pulse'][Math.floor(Math.random() * 3)];
+                this.rotation = 0;
+                
+                switch(side) {
+                    case 0: this.x = Math.random() * canvas.width; this.y = -this.size; this.vx = 0; this.vy = this.speed; break;
+                    case 1: this.x = canvas.width + this.size; this.y = Math.random() * canvas.height; this.vx = -this.speed; this.vy = 0; break;
+                    case 2: this.x = Math.random() * canvas.width; this.y = canvas.height + this.size; this.vx = 0; this.vy = -this.speed; break;
+                    case 3: this.x = -this.size; this.y = Math.random() * canvas.height; this.vx = this.speed; this.vy = 0; break;
+                }
+            }
+
+            update() {
+                const slowFactor = player.hasTimeWarp ? 0.3 : 1;
+                this.x += this.vx * slowFactor;
+                this.y += this.vy * slowFactor;
+                this.rotation += 0.05;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = '#f00';
+                
+                if (this.type === 'block') {
+                    ctx.fillStyle = '#f00';
+                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                } else if (this.type === 'spike') {
+                    ctx.fillStyle = '#f00';
+                    ctx.beginPath();
+                    ctx.moveTo(0, -this.size/2);
+                    ctx.lineTo(this.size/2, this.size/2);
+                    ctx.lineTo(-this.size/2, this.size/2);
+                    ctx.closePath();
+                    ctx.fill();
+                } else if (this.type === 'pulse') {
+                    ctx.strokeStyle = '#f00';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size/2, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+                
+                ctx.restore();
+            }
+
+            isOffScreen() {
+                return this.x < -100 || this.x > canvas.width + 100 || 
+                       this.y < -100 || this.y > canvas.height + 100;
+            }
+
+            collidesWith(obj) {
+                return Math.hypot(this.x - obj.x, this.y - obj.y) < this.size/2 + obj.size/2;
+            }
+        }
+
+        // ============================================
+        // ENEMY CLASS
+        // ============================================
+        class Enemy {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() < 0.5 ? -50 : canvas.height + 50;
+                this.size = 25;
+                this.speed = CONFIG.ENEMY_SPEED;
+                this.type = Math.random() > 0.5 ? 'drone' : 'seeker';
+                this.health = 2;
+            }
+
+            update() {
+                const slowFactor = player.hasTimeWarp ? 0.3 : 1;
+                
+                if (this.type === 'seeker') {
+                    const dx = player.x - this.x;
+                    const dy = player.y - this.y;
+                    const dist = Math.hypot(dx, dy);
+                    this.x += (dx / dist) * this.speed * slowFactor;
+                    this.y += (dy / dist) * this.speed * slowFactor;
+                } else {
+                    this.y += this.speed * slowFactor;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = this.type === 'seeker' ? '#f0f' : '#f80';
+                ctx.fillStyle = this.type === 'seeker' ? '#f0f' : '#f80';
+                
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size/2, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.restore();
+            }
+
+            takeDamage() {
+                this.health--;
+                return this.health <= 0;
+            }
+
+            collidesWith(obj) {
+                return Math.hypot(this.x - obj.x, this.y - obj.y) < this.size/2 + obj.size/2;
+            }
+        }
+
+      
+                
+            

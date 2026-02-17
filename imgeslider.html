@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simple Image Slider</title>
+
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  background: linear-gradient(45deg, red, yellow, green, blue);
+
+  }
+
+  .slider {
+    width: 600px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .slides {
+    display: flex;
+    width: 1200px;
+    animation: slide 9s infinite;
+  }
+
+  .slides img {
+    width: 400px;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  @keyframes slide {
+    0%   { transform: translateX(0); }
+    33%  { transform: translateX(-400px); }
+    66%  { transform: translateX(-800px); }
+    100% { transform: translateX(0); }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="slider">
+  <div class="slides">
+    <img src="https://picsum.photos/400/250?1">
+    <img src="https://picsum.photos/400/250?2">
+    <img src="https://picsum.photos/400/250?3">
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mountain Serenity - Discover Nature's Majesty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(20, 30, 25, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 400;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: #7cb798;
+        }
+
+        .menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: #fff;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a3a2f 0%, #0d1f1a 50%, #1a2f3a 100%);
+        }
+
+        .mountains-svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            letter-spacing: 3px;
+        }
+
+        .cta-btn {
+            padding: 15px 50px;
+            background: transparent;
+            border: 2px solid #7cb798;
+            color: #7cb798;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .cta-btn:hover {
+            background: #7cb798;
+            color: #1a2f25;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: #7cb798;
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        /* About Section */
+        .about {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #0d1f1a 0%, #1a2f25 100%);
+            padding: 100px 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .about-image-inner {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #2d5a47, #1a3a2f, #3d6a57);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .mountain-illustration {
+            width: 100%;
+            height: 100%;
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 30px;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #a8c5b8;
+            margin-bottom: 20px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 50px;
+            background: #1a2f25;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .features-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .features-header p {
+            color: #a8c5b8;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(124, 183, 152, 0.1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #7cb798, #4a9970);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: #fff;
+        }
+
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #a8c5b8;
+            line-height: 1.7;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 100px 50px;
+            background: linear-gradient(180deg, #1a2f25 0%, #0d1f1a 100%);
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .gallery-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 250px);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .gallery-item-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover .gallery-item-inner {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 50px;
+            background: #0d1f1a;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: #7cb798;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            color: #a8c5b8;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Testimonial Section */
+        .testimonial {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, #1a3a2f 0%, #1a2f25 100%);
+            text-align: center;
+        }
+
+        .testimonial-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quote-icon {
+            font-size: 5rem;
+            color: #7cb798;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin: 30px 0;
+        }
+
+        .testimonial cite {
+            color: #7cb798;
+            font-style: normal;
+            letter-spacing: 2px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 50px;
+            background: #0d1f1a;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .contact p {
+            color: #a8c5b8;
+            margin-bottom: 40px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(124, 183, 152, 0.3);
+            border-radius: 5px;
+            color: #fff;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #7cb798;
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            padding: 15px 50px;
+            background: #7cb798;
+            border: none;
+            color: #0d1f1a;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-form button:hover {
+            background: #9dd4b5;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 50px 30px;
+            background: #0a1510;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border: 1px solid rgba(124, 183, 152, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #7cb798;
+            border-color: #7cb798;
+        }
+
+        .social-links svg {
+            width: 20px;
+            height: 20px;
+            stroke: #7cb798;
+            transition: stroke 0.3s;
+        }
+
+        .social-links a:hover svg {
+            stroke: #0d1f1a;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #a8c5b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #7cb798;
+        }
+
+        .copyright {
+            color: #5a7a6a;
+            font-size: 0.85rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-15px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-7px);
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+            }
+
+            .gallery-item:nth-child(1) {
+                grid-column: span 2;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(20, 30, 25, 0.98);
+                flex-direction: column;
+                padding: 30px;
+                gap: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-btn {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about {
+                padding: 60px 20px;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about-image {
+                height: 300px;
+            }
+
+            .about-content h2,
+            .features-header h2,
+            .gallery-header h2,
+            .contact h2 {
+                font-size: 2rem;
+            }
+
+            .features,
+            .gallery,
+            .contact {
+                padding: 60px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item:nth-child(1) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+
+            .stat-item h3 {
+                font-size: 2.5rem;
+            }
+
+            .testimonial blockquote {
+                font-size: 1.3rem;
+            }
+
+            footer {
+                padding: 40px 20px 20px;
+            }
+
+            .footer-links {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">MOUNTAIN SERENITY</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Explore</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-btn" id="menuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        
+        <!-- Floating Stars -->
+        <div class="floating-elements" id="stars"></div>
+        
+        <!-- Mountain SVG Background -->
+        <svg class="mountains-svg" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+            <!-- Back Mountains -->
+            <path d="M0 800 L0 500 L200 350 L400 450 L600 300 L800 400 L1000 250 L1200 380 L1440 280 L1440 800 Z" fill="#1a3a2f" opacity="0.5"/>
+            <!-- Middle Mountains -->
+            <path d="M0 800 L0 550 L150 420 L350 520 L550 380 L750 480 L950 350 L1150 450 L1350 320 L1440 380 L1440 800 Z" fill="#2d5a47" opacity="0.7"/>
+            <!-- Front Mountains -->
+            <path d="M0 800 L0 600 L100 500 L250 580 L400 450 L550 550 L700 420 L850 530 L1000 400 L1150 520 L1300 430 L1440 500 L1440 800 Z" fill="#3d6a57"/>
+            <!-- Trees silhouette -->
+            <g fill="#1a2f25">
+                <path d="M50 800 L50 650 L70 650 L70 620 L40 620 L60 580 L30 580 L60 530 L20 530 L60 470 L100 530 L60 530 L90 580 L60 580 L80 620 L50 620 L50 650 L70 650 L70 800 Z"/>
+                <path d="M150 800 L150 680 L170 680 L170 650 L140 650 L160 610 L130 610 L160 560 L120 560 L160 500 L200 560 L160 560 L190 610 L160 610 L180 650 L150 650 L150 680 L170 680 L170 800 Z"/>
+                <path d="M1300 800 L1300 670 L1320 670 L1320 640 L1290 640 L1310 600 L1280 600 L1310 550 L1270 550 L1310 490 L1350 550 L1310 550 L1340 600 L1310 600 L1330 640 L1300 640 L1300 670 L1320 670 L1320 800 Z"/>
+                <path d="M1380 800 L1380 700 L1400 700 L1400 670 L1370 670 L1390 630 L1360 630 L1390 580 L1350 580 L1390 520 L1430 580 L1390 580 L1420 630 L1390 630 L1410 670 L1380 670 L1380 700 L1400 700 L1400 800 Z"/>
+            </g>
+            <!-- Snow caps -->
+            <path d="M600 300 L580 340 L620 340 Z" fill="#fff" opacity="0.9"/>
+            <path d="M1000 250 L975 300 L1025 300 Z" fill="#fff" opacity="0.9"/>
+        </svg>
+
+        <div class="hero-content">
+            <h1>Embrace the Wild</h1>
+            <p>DISCOVER THE MAJESTY OF UNTOUCHED NATURE</p>
+            <button class="cta-btn">BEGIN YOUR JOURNEY</button>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-image">
+                <div class="about-image-inner">
+                    <svg class="mountain-illustration" viewBox="0 0 400 400">
+                        <!-- Sky gradient -->
+                        <defs>
+                            <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#1a3a2f"/>
+                                <stop offset="100%" style="stop-color:#2d5a47"/>
+                            </linearGradient>
+                            <linearGradient id="sunGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#f4d03f"/>
+                                <stop offset="100%" style="stop-color:#e67e22"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="400" height="400" fill="url(#skyGrad)"/>
+                        <!-- Sun -->
+                        <circle cx="320" cy="80" r="40" fill="url(#sunGrad)" opacity="0.8"/>
+                        <!-- Mountains -->
+                        <path d="M0 400 L0 280 L80 180 L160 250 L240 150 L320 220 L400 160 L400 400 Z" fill="#1a3a2f"/>
+                        <path d="M0 400 L0 300 L60 220 L140 280 L220 180 L300 240 L380 190 L400 210 L400 400 Z" fill="#2d5a47"/>
+                        <path d="M0 400 L0 320 L100 260 L180 310 L260 230 L340 290 L400 250 L400 400 Z" fill="#3d6a57"/>
+                        <!-- Snow -->
+                        <path d="M240 150 L225 185 L255 185 Z" fill="#fff" opacity="0.9"/>
+                        <!-- Birds -->
+                        <path d="M100 100 Q110 90 120 100" stroke="#fff" fill="none" stroke-width="2" opacity="0.6"/>
+                        <path d="M130 120 Q140 110 150 120" stroke="#fff" fill="none" stroke-width="2" opacity="0.6"/>
+                        <path d="M80 130 Q90 120 100 130" stroke="#fff" fill="none" stroke-width="2" opacity="0.6"/>
+                        <!-- Lake reflection -->
+                        <ellipse cx="200" cy="380" rx="150" ry="30" fill="#1a3a2f" opacity="0.5"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="about-content">
+                <h2>Where Earth Meets Sky</h2>
+                <p>In the heart of untouched wilderness, where ancient peaks pierce the heavens and valleys hold secrets of millennia, we invite you to discover a world beyond the ordinary.</p>
+                <p>Our mountain sanctuaries offer more than just breathtaking views—they provide a gateway to reconnect with nature's raw beauty, to find peace in the whisper of pine forests, and to witness the dance of light across pristine landscapes.</p>
+                <p>Every trail tells a story. Every summit reveals a new perspective. Join us in celebrating the magnificent wilderness that calls to the explorer in all of us.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-header">
+            <h2>Explore Nature's Wonders</h2>
+            <p>Discover experiences that awaken your spirit</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M12 2L2 22h20L12 2z"/>
+                        <path d="M12 2v10"/>
+                    </svg>
+                </div>
+                <h3>Mountain Peaks</h3>
+                <p>Conquer majestic summits and witness panoramic views that stretch to infinity. Each peak offers unique challenges and rewards.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                        <polyline points="9,22 9,12 15,12 15,22"/>
+                    </svg>
+                </div>
+                <h3>Alpine Lodges</h3>
+                <p>Rest in cozy mountain retreats where comfort meets wilderness. Wake up to misty valleys and starlit skies.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M2 12h20"/>
+                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+                    </svg>
+                </div>
+                <h3>Guided Expeditions</h3>
+                <p>Expert guides lead you through hidden trails, sharing the secrets of flora, fauna, and ancient geological wonders.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </div>
+                <h3>Nature Workshops</h3>
+                <p>Learn wilderness skills, photography techniques, and ecological knowledge from seasoned naturalists.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 010 7.75"/>
+                    </svg>
+                </div>
+                <h3>Group Adventures</h3>
+                <p>Share unforgettable moments with fellow nature enthusiasts on carefully curated group experiences.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                </div>
+                <h3>Hidden Gems</h3>
+                <p>Discover secluded waterfalls, crystal-clear lakes, and pristine meadows far from crowded trails.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="gallery-header">
+            <h2>Visual Journey</h2>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <svg class="gallery-item-inner" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                        <linearGradient id="dawn" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff7e5f"/>
+                            <stop offset="50%" style="stop-color:#feb47b"/>
+                            <stop offset="100%" style="stop-color:#2d5a47"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="600" height="500" fill="url(#dawn)"/>
+                    <circle cx="300" cy="200" r="60" fill="#fff" opacity="0.9"/>
+                    <path d="M0 500 L0 350 L150 250 L300 320 L450 200 L600 280 L600 500 Z" fill="#1a3a2f"/>
+                    <path d="M0 500 L0 380 L100 300 L250 360 L400 260 L550 330 L600 300 L600 500 Z" fill="#2d5a47"/>
+                    <path d="M0 500 L0 420 L200 350 L350 400 L500 320 L600 370 L600 500 Z" fill="#3d6a57"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <h4>Mountain Sunrise</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <svg class="gallery-item-inner" viewBox="0 0 300 250" preserveAspectRatio="xMidYMid slice">
+                    <rect width="300" height="250" fill="#1a3a2f"/>
+                    <ellipse cx="150" cy="180" rx="120" ry="40" fill="#0a1510"/>
+                    <path d="M30 180 L80 100 L130 150 L180 80 L230 130 L280 90 L280 180 Z" fill="#2d5a47"/>
+                    <circle cx="50" cy="40" r="15" fill="#f4f4f4" opacity="0.8"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <h4>Moonlit Lake</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <svg class="gallery-item-inner" viewBox="0 0 300 250" preserveAspectRatio="xMidYMid slice">
+                    <rect width="300" height="250" fill="#2d5a47"/>
+                    <path d="M0 250 L0 100 L50 150 L100 80 L150 120 L200 60 L250 100 L300 50 L300 250 Z" fill="#3d6a57"/>
+                    <path d="M200 60 L190 85 L210 85 Z" fill="#fff" opacity="0.9"/>
+                    <circle cx="260" cy="30" r="20" fill="#f4d03f" opacity="0.8"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <h4>Alpine Glory</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <svg class="gallery-item-inner" viewBox="0 0 300 250" preserveAspectRatio="xMidYMid slice">
+                    <rect width="300" height="250" fill="#1a3a2f"/>
+                    <path d="M0 250 L0 180 Q75 120 150 180 Q225 120 300 180 L300 250 Z" fill="#2d5a47"/>
+                    <path d="M0 250 L0 200 Q75 160 150 200 Q225 160 300 200 L300 250 Z" fill="#3d6a57"/>
+                    <circle cx="150" cy="80" r="30" fill="#7cb798" opacity="0.3"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <h4>Rolling Hills</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <svg class="gallery-item-inner" viewBox="0 0 300 250" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                        <linearGradient id="sunset" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#e74c3c"/>
+                            <stop offset="100%" style="stop-color:#2d5a47"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="300" height="250" fill="url(#sunset)"/>
+                    <path d="M0 250 L0 150 L100 100 L200 160 L300 90 L300 250 Z" fill="#1a2f25"/>
+                    <circle cx="250" cy="60" r="25" fill="#f39c12" opacity="0.9"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <h4>Golden Hour</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <svg class="gallery-item-inner" viewBox="0 0 300 250" preserveAspectRatio="xMidYMid slice">
+                    <rect width="300" height="250" fill="#0a1510"/>
+                    <path d="M0 250 L0 160 L60 120 L120 180 L180 100 L240 150 L300 80 L300 250 Z" fill="#1a3a2f"/>
+                    <!-- Trees -->
+                    <path d="M50 250 L50 200 L40 200 L55 170 L45 170 L60 130 L75 170 L65 170 L70 200 L60 200 L60 250 Z" fill="#0a1510"/>
+                    <path d="M250 250 L250 210 L240 210 L255 180 L245 180 L260 150 L275 180 L265 180 L270 210 L260 210 L260 250 Z" fill="#0a1510"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <h4>Forest Valley</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3 id="stat1">0</h3>
+                <p>MOUNTAIN TRAILS</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat2">0</h3>
+                <p>HAPPY EXPLORERS</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat3">0</h3>
+                <p>PRISTINE LOCATIONS</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat4">0</h3>
+                <p>YEARS OF ADVENTURE</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial">
+        <div class="testimonial-content">
+            <div class="quote-icon">"</div>
+            <blockquote>The mountains are calling and I must go. In every walk with nature, one receives far more than he seeks.</blockquote>
+            <cite>— JOHN MUIR</cite>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <h2>Start Your Adventure</h2>
+            <p>Ready to explore? Get in touch and let us help you plan your perfect mountain escape.</p>
+            <form class="contact-form" id="contactForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Tell us about your dream adventure..."></textarea>
+                <button type="submit">SEND MESSAGE</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">MOUNTAIN SERENITY</div>
+        <div class="social-links">
+            <a href="#" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                </svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                    <path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z"/>
+                    <polygon points="9.75,15.02 15.5,11.75 9.75,8.48"/>
+                </svg>
+            </a>
+        </div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">FAQ</a>
+            <a href="#">Careers</a>
+        </div>
+        <p class="copyright">© 2026 Mountain Serenity. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Generate stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 60 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.width = Math.random() * 3 + 1 + 'px';
+            star.style.height = star.style.width;
+            starsContainer.appendChild(star);
+        }
+
+        // Counter animation
+        function animateCounter(elementId, target, duration) {
+            const element = document.getElementById(elementId);
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + '+';
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + '+';
+                }
+            }, 16);
+        }
+
+        // Intersection Observer for stats
+        const statsSection = document.querySelector('.stats');
+        let statsAnimated = false;
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !statsAnimated) {
+                    statsAnimated = true;
+                    animateCounter('stat1', 150, 2000);
+                    animateCounter('stat2', 10000, 2000);
+                    animateCounter('stat3', 45, 2000);
+                    animateCounter('stat4', 25, 2000);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statsObserver.observe(statsSection);
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            this.reset();
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                hero.style.opacity = 1 - (scrolled / window.innerHeight);
+            }
+        });
+    </script>
+</body>
+</html>

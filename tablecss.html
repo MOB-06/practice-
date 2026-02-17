@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>CSS Table Example</title>
+ <style>
+    .a{
+        border: solid;
+        padding: 3px;
+        border-radius: 5px;
+        background-color: #3D8D7A;
+    }
+    .a:hover{
+        text-align: center;
+        transform: scale(0.9);
+        background-color: #252e37;
+        color: antiquewhite;
+        text-decoration: underline;
+    }
+ table {
+ border-collapse: collapse; 
+ width: 50%;
+ margin: auto;
+ height: 250px;
+ width: 600px;
+
+
+ }
+ th,td{
+ border: 4px solid black; 
+ padding: 10px;
+ text-align: center;
+ }
+ th {
+ background-color: #a7c715; /* heading color */
+ }
+ td{
+    background-color: rgb(23, 186, 105);
+ }
+ tr:hover {
+ background-color:burlywood; /* hover effect */
+ }
+td:hover{
+     transform: scale(1.1);
+   background-color: crimson;
+}
+th:hover{
+    background-color: aquamarine;
+}
+ </style>
+</head>
+<body bgcolor="#16404d">
+ <h2 class="a">Student Marks</h2>
+ <table>
+ <tr>
+ <th rowspan="2">Name</th>
+ <th colspan="2">Maths</th>
+ <th rowspan="2">Science</th>
+ <th rowspan="2">English</th>
+ </tr>
+ <tr>
+    <th>math 1 </th>
+    <th>math 2</th>
+ </tr>
+ <tr>
+ <td>Sudin </td>
+ <td>90</td>
+ <td>85</td>
+ <td>86</td>
+ <td>66</td>
+ </tr>
+ <tr>
+ <td>Ashwin</td>
+ <td>89</td>
+ <td>92</td>
+ <td>89</td>
+ <td>89</td>
+ </tr>
+ </table>
+</body>
+</html>
