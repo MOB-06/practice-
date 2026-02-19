@@ -3,157 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navigation Bar Page</title>
+    <title>Ajit Adhikari - Portfolio</title>
     <link rel="stylesheet" href="nave.css">
-</head>
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">Ajit Adhikari</div>
-            <ul>
-                <li><a class="active" href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-       
-    </header>
- <style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
+            line-height: 1.6;
         }
 
-        header {
+        /* Navbar Styles */
+        .navbar {
             background: linear-gradient(135deg, #2a4d1a, #3a6d2a);
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
+        .navbar .logo {
+            color: white;
+            font-size: 1.8em;
+            font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        aside {
-            background-image:  url('aside.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            width: calc(25% - 20px);
-            float: left;
-            min-height: 350px;
-            padding: 45px 35px;
-            box-sizing: border-box;
-            margin: 20px 10px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 4px 8px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
         }
 
-        aside:hover {
-            background-image:  url('aside.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.2);
-            transform: translateY(-4px);
-        }
-
-        aside h2 {
-            margin-top: 0;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            border-bottom: 3px solid rgba(255, 255, 255, 0.6);
-            padding-bottom: 10px;
-        }
-
-        aside p {
-            line-height: 1.6;
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-            font-weight: 500;
-        }
-
-        section {
-            background-image: url('main.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            width: calc(75% - 20px);
-            float: left;
-            padding: 45px 50px;
-            min-height: 350px;
-            box-sizing: border-box;
-            margin: 20px 10px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 4px 8px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        section:hover {
-            background-image:  url('main.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.2);
-            transform: translateY(-4px);
-        }
-
-        section h2 {
-            margin-top: 0;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            border-bottom: 3px solid rgba(255, 255, 255, 0.6);
-            padding-bottom: 10px;
-        }
-
-        section p {
-            line-height: 1.8;
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
             font-size: 1.1em;
-            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
         }
 
+        .navbar ul li a:hover,
+        .navbar ul li a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #2a4d1a, #3a6d2a);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            max-width: 600px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Services/Projects Section */
+        .services {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2a4d1a;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+            transform: translateY(-8px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card h3 {
+            color: #2a4d1a;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card button {
+            background: linear-gradient(135deg, #2a4d1a, #3a6d2a);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card button:hover {
+            background: linear-gradient(135deg, #3a6d2a, #2a4d1a);
+            transform: scale(1.05);
+        }
+
+        /* Footer Styles */
         footer {
             background-color: #204e0d;
             color: white;
+            padding: 40px 20px;
             text-align: center;
-            padding: 20px;
-            clear: both;
             box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-media {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-media iframe {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        footer p {
+            font-size: 1em;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .navbar ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 1.1em;
+            }
+
+            .footer-media {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-media iframe {
+                width: 100%;
+                max-width: 560px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Welcome to My Website</h1>
-    </header>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Ajit Adhikari</div>
+        <ul>
+            <li><a class="active" href="home.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
 
-    <aside>
-        <h2>Aside Section</h2>
-        <p>This is the sidebar content.</p>
-    </aside>
-
-    <section>
-        <h2>Main Section</h2>
-        <p>This is the main content area.</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to My Portfolio</h1>
+        <p>Crafting digital experiences with passion and precision</p>
     </section>
 
+    <!-- Services/Projects Section -->
+    <section class="services">
+        <h2>My Services</h2>
+        <div class="cards-container">
+            
+            <div class="card">
+                <img src="https://via.placeholder.com/280x200" alt="Web Development">
+                <div class="card-content">
+                    <h3>Web Development</h3>
+                    <p>Creating responsive and modern websites tailored to your needs.</p>
+                    <button>Learn More</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://via.placeholder.com/280x200" alt="UI/UX Design">
+                <div class="card-content">
+                    <h3>UI/UX Design</h3>
+                    <p>Designing beautiful and intuitive user interfaces.</p>
+                    <button>Learn More</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://via.placeholder.com/280x200" alt="Consulting">
+                <div class="card-content">
+                    <h3>Consulting</h3>
+                    <p>Professional guidance for your digital projects.</p>
+                    <button>Learn More</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://via.placeholder.com/280x200" alt="SEO Optimization">
+                <div class="card-content">
+                    <h3>SEO Optimization</h3>
+                    <p>Boosting your online visibility and search rankings.</p>
+                    <button>Learn More</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7062.854596233901!2d85.31265540106426!3d27.734963568650976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19ee1725b291%3A0x11712d62fb2ed8d1!2sBG%20banquet%20and%20events!5e0!3m2!1sen!2snp!4v1771477651984!5m2!1sen!2snp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/Y6AJJT1sHr0?si=tAUx8aYSqVS9gPYB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <p>© 2026 My Website </p>
+        <div class="footer-content">
+            <div class="footer-media">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7062.854596233901!2d85.31265540106426!3d27.734963568650976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19ee1725b291%3A0x11712d62fb2ed8d1!2sBG%20banquet%20and%20events!5e0!3m2!1sen!2snp!4v1771477651984!5m2!1sen!2snp" 
+                    width="560" 
+                    height="350" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                
+                <iframe width="560" 
+                    height="350" 
+                    src="https://www.youtube.com/embed/Y6AJJT1sHr0?si=tAUx8aYSqVS9gPYB" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <p>© 2026 Ajit Adhikari | All Rights Reserved</p>
+        </div>
     </footer>
 
-   
-    
 </body>
 </html>
