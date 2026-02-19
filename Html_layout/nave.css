@@ -5,8 +5,8 @@ body {
 }
 
 .navbar {
-    background-color: #333; /* Dark background color */
-    overflow: hidden; /* Prevents list items from going outside */
+    background-color: #333; 
+    overflow: hidden; 
     padding: 15px 40px;
     display: flex;
     justify-content: space-between;
