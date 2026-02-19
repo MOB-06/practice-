@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lanterns World - Handcrafted Lanterns Shop</title>
-    <link rel="stylesheet" href="nave.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -16,9 +15,9 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Segoe UI', Georgia, serif;
             line-height: 1.6;
-            background-color: #faf8f3;
+            background-color: #f3f7f6;
         }
 
         /* Navbar Styles */
@@ -169,38 +168,23 @@
         }
 
         .lantern-card {
-            background: linear-gradient(145deg, #ffffff, #f5f5f0);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
-            overflow: hidden;
-            transition: all 0.4s ease;
-            border: 3px solid transparent;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
         .lantern-card:hover {
-            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.35);
-            transform: translateY(-10px) scale(1.02);
-            border: 3px solid #D2691E;
-        }
-
-        .lantern-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .lantern-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .lantern-card-content {
-            padding: 25px;
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
+            transform: translateY(-8px);
+            border: 2px solid #D2691E;
         }
 
         .lantern-card h3 {
             color: #8B4513;
-            font-size: 1.8em;
+            font-size: 1.6em;
             margin-bottom: 15px;
             font-family: 'Cinzel', serif;
             border-bottom: 2px solid #D2691E;
@@ -210,7 +194,7 @@
         .lantern-card .description {
             color: #555;
             line-height: 1.8;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             font-size: 1.05em;
         }
 
@@ -219,22 +203,21 @@
             font-weight: 600;
             font-style: italic;
             background: #FFF8DC;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 8px;
             border-left: 4px solid #D2691E;
-            margin-top: 15px;
+            margin-bottom: 20px;
         }
 
         .lantern-card button {
-            background: linear-gradient(135deg, #8B4513, #D2691E);
+            background: #8B4513;
             color: white;
             border: none;
-            padding: 14px 35px;
-            font-size: 1.1em;
+            padding: 12px 30px;
+            font-size: 1em;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 20px;
             width: 100%;
             font-weight: bold;
             text-transform: uppercase;
@@ -242,9 +225,8 @@
         }
 
         .lantern-card button:hover {
-            background: linear-gradient(135deg, #D2691E, #8B4513);
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+            background: #D2691E;
+            transform: scale(1.02);
         }
 
         /* Footer Styles */
@@ -360,57 +342,40 @@
     <section class="lantern-types">
         <h2>Popular Lantern Types</h2>
         <div class="lantern-grid">
-            
             <div class="lantern-card">
-                <img src="https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=400&h=300&fit=crop" alt="Paper Lanterns">
-                <div class="lantern-card-content">
-                    <h3>1. Paper Lanterns</h3>
-                    <p class="description">Lightweight and colorful, often used in festivals and celebrations.</p>
-                    <p class="materials">Made of: rice paper, bamboo frame, wire</p>
-                    <button>View Details</button>
-                </div>
+                <h3>1. Paper Lanterns</h3>
+                <p class="description">Lightweight and colorful, often used in festivals and celebrations.</p>
+                <p class="materials">Made of: rice paper, bamboo frame, wire</p>
+                <button>View Details</button>
             </div>
 
             <div class="lantern-card">
-                <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&h=300&fit=crop" alt="Metal Lanterns">
-                <div class="lantern-card-content">
-                    <h3>2. Metal Lanterns</h3>
-                    <p class="description">Durable and elegant, perfect for outdoor or vintage decor.</p>
-                    <p class="materials">Made of: iron, brass, copper, or steel</p>
-                    <button>View Details</button>
-                </div>
+                <h3>2. Metal Lanterns</h3>
+                <p class="description">Durable and elegant, perfect for outdoor or vintage decor.</p>
+                <p class="materials">Made of: iron, brass, copper, or steel</p>
+                <button>View Details</button>
             </div>
 
             <div class="lantern-card">
-                <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=400&h=300&fit=crop" alt="Glass Lanterns">
-                <div class="lantern-card-content">
-                    <h3>3. Glass Lanterns</h3>
-                    <p class="description">Stylish decorative lanterns that diffuse light beautifully.</p>
-                    <p class="materials">Made of: tempered glass panels with metal frames</p>
-                    <button>View Details</button>
-                </div>
+                <h3>3. Glass Lanterns</h3>
+                <p class="description">Stylish decorative lanterns that diffuse light beautifully.</p>
+                <p class="materials">Made of: tempered glass panels with metal frames</p>
+                <button>View Details</button>
             </div>
 
             <div class="lantern-card">
-                <img src="https://images.unsplash.com/photo-1544552866-d3ed42536cfd?w=400&h=300&fit=crop" alt="Wooden Lanterns">
-                <div class="lantern-card-content">
-                    <h3>4. Wooden Lanterns</h3>
-                    <p class="description">Rustic and natural looking, ideal for cozy interiors.</p>
-                    <p class="materials">Made of: carved wood, sometimes combined with glass</p>
-                    <button>View Details</button>
-                </div>
+                <h3>4. Wooden Lanterns</h3>
+                <p class="description">Rustic and natural looking, ideal for cozy interiors.</p>
+                <p class="materials">Made of: carved wood, sometimes combined with glass</p>
+                <button>View Details</button>
             </div>
 
             <div class="lantern-card">
-                <img src="https://images.unsplash.com/photo-1565084888279-aca607ecce2c?w=400&h=300&fit=crop" alt="LED Modern Lanterns">
-                <div class="lantern-card-content">
-                    <h3>5. LED Modern Lanterns</h3>
-                    <p class="description">Energy-efficient and safe for daily use.</p>
-                    <p class="materials">Made of: plastic, acrylic, aluminum, electronic LED units</p>
-                    <button>View Details</button>
-                </div>
+                <h3>5. LED Modern Lanterns</h3>
+                <p class="description">Energy-efficient and safe for daily use.</p>
+                <p class="materials">Made of: plastic, acrylic, aluminum, electronic LED units</p>
+                <button>View Details</button>
             </div>
-
         </div>
     </section>
 
@@ -422,18 +387,16 @@
                     width="500" 
                     height="350" 
                     style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
+                    allowfullscreen 
+                    loading="lazy">
                 </iframe>
                 
                 <iframe width="500" 
                     height="350" 
-                    src="https://www.youtube.com/embed/Y6AJJT1sHr0?si=tAUx8aYSqVS9gPYB" 
+                    src="https://www.youtube.com/embed/Y6AJJT1sHr0" 
                     title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
+                    style="border:0;" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
                 </iframe>
             </div>
