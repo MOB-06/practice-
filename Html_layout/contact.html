@@ -6,6 +6,15 @@
     <title>Contact Us - Navigation Bar Page</title>
     <link rel="stylesheet" href="nave.css">
     <style>
+
+        .navebar {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
      .container {
             max-width: 2000px;
             background-color: #b6762e;
@@ -15,38 +24,57 @@
             gap: 20px;
             padding: 0 20px;
             flex: 1; /* Pushes footer down */
+             display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            padding: 20px;
      }
 
      /* Individual Card Blocks */
-        .card {
-            background: rgb(219, 170, 33);
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            flex: 1 1 calc(50% - 20px); /* Two columns */
-            min-height: 200px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            float: left;
-            width: 30%;
+        .card1 {
+       background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
+
+    .card2 {
+         background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+    }
+    .card3 {
+         background: rgb(158, 107, 40);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+    }
+
+        
         /* Hover effect for cards */
-        .card:hover {
-            background: rgb(219, 170, 33);
-            border-color: #999;
+        .card:hover ,.card1:hover, .card2:hover, .card3:hover {
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
+            transform: translateY(-8px);
+            border: 2px solid #D2691E;
         }
          /* Styling for the Form Card specifically */
         .form-card input, .form-card textarea {
             width: 100%;
             margin-bottom: 10px;
             padding: 8px;
+            
         }
         .form-card:hover {
-            background: rgb(219, 170, 33);
-            border-color: #999;
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
+            transform: translateY(-8px);
+            border: 2px solid #D2691E;
         }
      </style>
 </head>
@@ -64,17 +92,17 @@
     </header>
 
       <div class="container">
-        <div class="card">
+        <div class="card1">
             <h3>Map</h3>
             <p style="color: #666;">[Interactive Map Embed Here]</p>
         </div>
 
-        <div class="card">
+        <div class="card2">
             <h3>Video</h3>
             <p style="color: #666;">[Introduction Video Here]</p>
         </div>
 
-        <div class="card">
+        <div class="card3">
             <h3>Office Details</h3>
             <p><strong>Address:</strong> 123 Tech Lane</p>
             <p><strong>Phone:</strong> (555) 012-3456</p>
