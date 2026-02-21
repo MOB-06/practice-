@@ -65,16 +65,26 @@
             border: 2px solid #D2691E;
         }
          /* Styling for the Form Card specifically */
-        .form-card input, .form-card textarea {
+        .cardform {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .cardform input, .cardform textarea {
             width: 100%;
             margin-bottom: 10px;
             padding: 8px;
+           
             
         }
-        .form-card:hover {
-            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
+        .cardform:hover {
+              box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
             transform: translateY(-8px);
             border: 2px solid #D2691E;
+           
         }
      </style>
 </head>
@@ -108,7 +118,7 @@
             <p><strong>Phone:</strong> (555) 012-3456</p>
         </div>
 
-        <div class="card form-card">
+        <div class="cardform">
             <h3>Contact Form</h3>
             <input type="text" placeholder="Your Name">
             <input type="email" placeholder="Your Email">
