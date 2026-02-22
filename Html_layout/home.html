@@ -4,320 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lanterns World - Handcrafted Lanterns Shop</title>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        
 
-        body {
-            font-family: 'Segoe UI', Georgia, serif;
-            padding: 10px;
-            line-height: 1.6;
-            background-color: #f3f7f6;
-        }
-
-        /* Navbar Styles */
-        .navbar {
-            background: linear-gradient(135deg, #8B4513, #D2691E, #daaf7c);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.4);
-            position: sticky;
-            top: 10;
-            height: 80px;
-        }
-
-        .navbar .logo {
-            color: #FFD700;
-            font-size: 2em;
-            font-weight: bold;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
-            font-family: 'Cinzel', serif;
-            letter-spacing: 2px;
-        }
-
-        .navbar ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
-
-        .navbar ul li a {
-            color: #FFF8DC;
-            text-decoration: none;
-            font-size: 1.1em;
-            padding: 0.5rem 1.2rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .navbar ul li a:hover,
-        .navbar ul li a.active {
-            background-color: rgba(255, 215, 0, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #D2691E, #8B4513, #A0522D);
-            color: white;
-            padding: 80px 40px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '🏮';
-            position: absolute;
-            font-size: 15em;
-            opacity: 0.1;
-            right: -50px;
-            top: -50px;
-            transform: rotate(15deg);
-        }
-
-        .hero h1 {
-            font-size: 3.5em;
-            margin-bottom: 1.5rem;
-            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
-            font-family: 'Cinzel', serif;
-            color: #FFD700;
-            letter-spacing: 3px;
-        }
-
-        .hero p {
-            font-size: 1.2em;
-            max-width: 900px;
-            margin: 0 auto;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-            line-height: 1.9;
-            text-align: justify;
-            padding: 0 20px;
-            color: #FFF8DC;
-        }
-
-        /* Quote Section (Aside) */
-        .quote-section {
-            background: linear-gradient(135deg, #df8209, #631e11);
-            padding: 80px 40px;
-            text-align: center;
-            position: relative;
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
-            border-top: 5px solid #FFD700;
-            border-bottom: 5px solid #FFD700;
-            padding: 60px 20px;
-        }
-
-        .quote-section::before {
-            content: '"';
-            position: absolute;
-            font-size: 20em;
-            opacity: 0.08;
-            left: 50px;
-            top: -50px;
-            font-family: Georgia, serif;
-            color: #FFD700;
-            padding: 2px; ;
-        }
-
-        .quote-section blockquote {
-            font-size: 2.5em;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: #FFD700;
-            max-width: 1000px;
-            margin: 0 auto;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-            font-weight: 400;
-            letter-spacing: 1px;
-        }
-
-        /* Lantern Types Section */
-        .lantern-types {
-            max-width: 1400px;
-            margin: 60px auto;
-            padding: 40px 20px;
-            border-radius: 15px;
-            background-color: #ff5100d8;
-        }
-        .lantern-types h2 {
-            text-align: center;
-            font-size: 3em;
-            color: #8B4513;
-            margin-bottom: 50px;
-            text-transform: uppercase;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .lantern-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            padding: 20px;
-        }
-
-        .lantern-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .lantern-card:hover {
-            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
-            transform: translateY(-8px);
-            border: 2px solid #D2691E;
-        }
-
-        .lantern-card h3 {
-            color: #8B4513;
-            font-size: 1.6em;
-            margin-bottom: 15px;
-            font-family: 'Cinzel', serif;
-            border-bottom: 2px solid #D2691E;
-            padding-bottom: 10px;
-        }
-
-        .lantern-card .description {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
-            font-size: 1.05em;
-        }
-
-        .lantern-card .materials {
-            color: #8B4513;
-            font-weight: 600;
-            font-style: italic;
-            background: #FFF8DC;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border-left: 4px solid #D2691E;
-            margin-bottom: 20px;
-        }
-
-        .lantern-card button {
-            background: #8B4513;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1em;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .lantern-card button:hover {
-            background: #D2691E;
-            transform: scale(1.02);
-        }
-
-        /* Footer Styles */
-        footer {
-            background: linear-gradient(135deg, #bb481b, #993e2d);
-            color: rgb(224, 158, 35);
-            padding: 50px 20px;
-            text-align: center;
-            border-radius: 4px 4px 0 0;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
-            border-top: 4px solid #D2691E;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-media {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
-        }
-
-        .footer-media iframe {
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-            border: 3px solid #D2691E;
-        }
-
-        footer p {
-            font-size: 1.1em;
-            margin-top: 20px;
-            color: #FFD700;
-            letter-spacing: 1px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .navbar .logo {
-                font-size: 1.5em;
-            }
-
-            .navbar ul {
-                flex-wrap: wrap;
-                gap: 0.8rem;
-                text-align: center;
-                justify-content: center;
-            }
-
-            .hero h1 {
-                font-size: 2.2em;
-            }
-
-            .hero p {
-                font-size: 1em;
-                padding: 0 10px;
-            }
-
-            .quote-section blockquote {
-                font-size: 1.6em;
-            }
-
-            .lantern-types h2 {
-                font-size: 2em;
-            }
-
-            .footer-media {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .footer-media iframe {
-                width: 100%;
-                max-width: 560px;
-            }
-        }
-    </style>
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Navigation Bar -->
+    <!-- ========== NAVBAR SECTION ========== -->
     <nav class="navbar">
-        <div class="logo">🏮 Lanterns World</div>
+        <div class="logo">
+            <a href="home.html">🏮 Lanterns World</a>
+        </div>
         <ul>
             <li><a class="active" href="home.html">Home</a></li>
             <li><a href="about.html">About</a></li>
@@ -326,73 +28,81 @@
         </ul>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- ========== HERO SECTION ========== -->
     <section class="hero">
-        <h1>Welcome to Lanterns World</h1>
-        <p>Lanterns have illuminated human life for centuries, guiding travelers, decorating festivals, and creating warm atmospheres in homes and streets. From ancient oil lanterns to modern decorative and LED designs, lanterns combine craftsmanship, culture, and light. Established with a passion for tradition and creativity, our lantern business brings you beautifully crafted pieces that blend history, art, and functionality.</p>
+        <div class="hero-content">
+            <h1>Welcome to Lanterns World</h1>
+            <p>Lanterns have illuminated human life for centuries, guiding travelers, decorating festivals, and creating warm atmospheres in homes and streets. From ancient oil lanterns to modern decorative and LED designs, lanterns combine craftsmanship, culture, and light. Established with a passion for tradition and creativity, our lantern business brings you beautifully crafted pieces that blend history, art, and functionality.</p>
+        </div>
     </section>
 
-    <!-- Quote Section -->
-    <section class="quote-section">
+    <!-- ========== QUOTE SECTION ========== -->
+    <aside class="quote-section">
         <blockquote>
             Light a lantern, and you don't just brighten a space — you brighten a moment, a memory, and a story.
+            <span class="quote-author">— Lanterns World</span>
         </blockquote>
-    </section>
+    </aside>
 
-    <!-- Lantern Types Section -->
+    <!-- ========== LANTERN TYPES SECTION ========== -->
     <section class="lantern-types">
         <h2>Popular Lantern Types</h2>
         <div class="lantern-grid">
-            <div class="lantern-card">
+
+            <article class="lantern-card">
                 <h3>1. Paper Lanterns</h3>
                 <p class="description">Lightweight and colorful, often used in festivals and celebrations.</p>
                 <p class="materials">Made of: rice paper, bamboo frame, wire</p>
                 <button>View Details</button>
-            </div>
+            </article>
 
-            <div class="lantern-card">
+            <article class="lantern-card">
                 <h3>2. Metal Lanterns</h3>
                 <p class="description">Durable and elegant, perfect for outdoor or vintage decor.</p>
                 <p class="materials">Made of: iron, brass, copper, or steel</p>
                 <button>View Details</button>
-            </div>
+            </article>
 
-            <div class="lantern-card">
+            <article class="lantern-card">
                 <h3>3. Glass Lanterns</h3>
                 <p class="description">Stylish decorative lanterns that diffuse light beautifully.</p>
                 <p class="materials">Made of: tempered glass panels with metal frames</p>
                 <button>View Details</button>
-            </div>
+            </article>
 
-            <div class="lantern-card">
+            <article class="lantern-card">
                 <h3>4. Wooden Lanterns</h3>
                 <p class="description">Rustic and natural looking, ideal for cozy interiors.</p>
                 <p class="materials">Made of: carved wood, sometimes combined with glass</p>
                 <button>View Details</button>
-            </div>
+            </article>
 
-            <div class="lantern-card">
+            <article class="lantern-card">
                 <h3>5. LED Modern Lanterns</h3>
                 <p class="description">Energy-efficient and safe for daily use.</p>
                 <p class="materials">Made of: plastic, acrylic, aluminum, electronic LED units</p>
                 <button>View Details</button>
-            </div>
+            </article>
+
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ========== FOOTER SECTION ========== -->
     <footer>
         <div class="footer-content">
             <div class="footer-media">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7062.854596233901!2d85.31265540106426!3d27.734963568650976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19ee1725b291%3A0x11712d62fb2ed8d1!2sBG%20banquet%20and%20events!5e0!3m2!1sen!2snp!4v1771477651984!5m2!1sen!2snp" 
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7062.854596233901!2d85.31265540106426!3d27.734963568650976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19ee1725b291%3A0x11712d62fb2ed8d1!2sBG%20banquet%20and%20events!5e0!3m2!1sen!2snp!4v1771477651984!5m2!1sen!2snp" 
                     width="500" 
                     height="350" 
                     style="border:0;" 
                     allowfullscreen 
-                    loading="lazy">
+                    loading="lazy"
+                    title="Our Location">
                 </iframe>
                 
-                <iframe width="500" 
+                <iframe 
+                    width="500" 
                     height="350" 
                     src="https://www.youtube.com/embed/Y6AJJT1sHr0" 
                     title="YouTube video player" 
@@ -401,7 +111,7 @@
                     allowfullscreen>
                 </iframe>
             </div>
-            <p>© 2026 Lanterns World | Illuminating Your Life with Tradition & Art</p>
+            <p>&copy; 2026 Lanterns World | Illuminating Your Life with Tradition &amp; Art</p>
         </div>
     </footer>
 
