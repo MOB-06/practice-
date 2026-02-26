@@ -181,6 +181,106 @@
             to { opacity: 1; }
         }
 
+        /* Section Headers */
+        section h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.4em;
+            color: #FFD700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 3px solid rgba(210, 105, 30, 0.3);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #D2691E);
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+
+        section h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8em;
+            color: #FFA500;
+            margin: 2rem 0 1rem;
+            letter-spacing: 1px;
+        }
+
+        section h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            color: #CD853F;
+            margin: 1.5rem 0 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Paragraphs */
+        section p {
+            color: #d4c4a8;
+            font-size: 1.05em;
+            line-height: 1.9;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+
+        section p strong {
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        /* Lists */
+        section ul {
+            margin: 1.2rem 0 1.5rem 2rem;
+            list-style: none;
+        }
+
+        section ul li {
+            color: #c4a882;
+            padding: 0.6rem 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.02em;
+            line-height: 1.7;
+            transition: all 0.3s ease;
+        }
+
+        section ul li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            color: #D2691E;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        section ul li:hover {
+            color: #e8d7bf;
+            padding-left: 35px;
+        }
+
+        section ul li:hover::before {
+            color: #FFD700;
+            transform: scale(1.2);
+        }
+
+        section ul li strong {
+            color: #FFA500;
+            font-weight: 600;
+        }
+
 
      </style>
 </head>
