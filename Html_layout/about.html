@@ -80,6 +80,107 @@
             color: #FFD700;
         }
 
+        /* Page Hero Styles */
+        .page-hero {
+            background: linear-gradient(135deg, #3d2216 0%, #2d1810 50%, #1e0f08 100%);
+            padding: 100px 40px 80px;
+            text-align: center;
+            border-bottom: 4px solid #D2691E;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .page-hero::after {
+            content: '🏮';
+            position: absolute;
+            font-size: 18em;
+            opacity: 0.04;
+            left: -80px;
+            bottom: -100px;
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.08; transform: scale(1); }
+            50% { opacity: 0.15; transform: scale(1.1); }
+        }
+
+        .page-hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.8em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .page-hero p {
+            font-size: 1.3em;
+            color: #e8d7bf;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-family: 'Cormorant Garamond', serif;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .hero-divider {
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            margin: 1.5rem auto;
+            border-radius: 2px;
+            animation: fadeInUp 1s ease-out 0.1s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /*main content styles*/
+         main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        section {
+            margin-bottom: 80px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
 
      </style>
 </head>
@@ -103,44 +204,75 @@
         </div>
 
     <main>
-    <section class="story-box">
+     <section class="story-box">
             <h2>Our Story: A Legacy Born from Darkness</h2>
             
-            <h3>The Beginning - 1947</h3>
-            <p>On a cold November evening in 1947, Henrik Larsson stood in the ruins of what had once been his family's blacksmith forge. The Great Fire of '47 had swept through the old quarter, destroying everything in its path. With nothing but his grandfather's anvil, a handful of tools salvaged from the ashes, and an old kerosene lantern that had miraculously survived the flames, Henrik made a decision that would change his life forever.</p>
-            
-            <p>That surviving lantern, with its intricate brass framework and hand-cut glass panels, became his inspiration. Henrik remembered his grandfather's words: "In the darkest times, we must become the light." He spent the winter of 1947 in a borrowed shed, teaching himself the art of lantern-making by dismantling and studying that precious heirloom.</p>
-            
-            <h3>The First Workshop - 1948-1960</h3>
-            <p>By spring of 1948, Henrik had created his first original lantern - a simple copper and glass piece he called "The Phoenix." He sold it to the local church to replace candelabras lost in the fire. The priest was so impressed that he commissioned twelve more for the sanctuary. Word spread quickly through the rebuilding community.</p>
-            
-            <p>Henrik's workshop, located in a renovated stable behind the old market square, became a beacon of hope during the reconstruction years. He employed five apprentices, all young men who had lost their livelihoods in the fire. Together, they developed the "Recovery Collection" - affordable, beautiful lanterns that brought warmth and light back to devastated neighborhoods.</p>
-            
-            <p>But Henrik's true breakthrough came in 1952 when Lady Eleanor Winterbourne, visiting from England, discovered his work. She commissioned an elaborate series of forty lanterns for her estate's autumn gala. This single order not only saved the workshop from financial difficulties but caught the attention of aristocrats and wealthy merchants across Europe.</p>
-            
-            <h3>The Golden Era - 1961-1985</h3>
-            <p>Henrik's daughter, Astrid Larsson-Chen, joined the business in 1961 after studying art history in Paris and metalworking in Florence. She brought revolutionary ideas, blending her father's traditional techniques with modern artistic movements. Astrid introduced the concept of "themed collections," creating lantern series inspired by different historical periods and cultures.</p>
-            
-            <p>In 1968, Astrid met Master Glassblower Kenji Tanaka at an international crafts exhibition in Venice. Kenji had perfected a technique for creating hand-blown glass with embedded natural materials - pressed flowers, leaves, and even delicate insects preserved in crystal-clear glass. Their collaboration resulted in the legendary "Eternal Garden Collection," which sold out within three days of its debut and is now found in museums worldwide.</p>
-            
-            <p>The 1970s brought expansion. The workshop moved to its current location - a converted textile mill with soaring ceilings and abundant natural light. Henrik, though retired from daily work, designed what he called his "masterpiece" - the Grand Cathedral Lantern, standing seven feet tall with over 200 individual glass panels and weighing nearly 300 pounds. It took eighteen months to complete and now hangs in the National Museum of Decorative Arts.</p>
-            
-            <h3>Challenges and Reinvention - 1986-2005</h3>
-            <p>The rise of mass-produced electric lighting in the 1980s nearly destroyed the traditional lantern market. Many historic workshops closed their doors. Henrik passed away in 1989, leaving Astrid to face the industry's darkest period. Sales dropped by 70% between 1986 and 1995.</p>
-            
-            <p>But Astrid refused to abandon her father's legacy. She made a bold decision: instead of competing with cheap imports, she would double down on artisanal quality and exclusivity. She reduced production volume by half but tripled the time spent on each piece. She also opened the workshop to public tours, teaching people about the dying art of lantern-making.</p>
-            
-            <p>In 1997, on the 50th anniversary of Henrik's first lantern, Astrid's son Marcus Chen proposed incorporating modern technology. Initially resistant, Astrid eventually agreed to experiment. Marcus developed a hybrid lantern that housed LED systems within traditional brass frameworks, combining the romance of vintage aesthetics with contemporary energy efficiency. The "Heritage Fusion Line" became their best-selling collection within two years.</p>
-            
-            <h3>The Modern Chapter - 2006-Present</h3>
-            <p>When Marcus officially took over as Master Craftsman in 2008, he honored both his grandfather's traditional methods and his mother's artistic vision while steering the business toward sustainability. He partnered with environmental organizations, ensuring all materials were ethically sourced and implementing a zero-waste production philosophy.</p>
-            
-            <p>The 2010s saw Lantern Emporium featured in prestigious design publications and TV documentaries. Celebrities and royalty became clients. But Marcus never forgot his great-grandfather's original mission: creating beautiful light accessible to all. He launched the "Community Lantern Project" in 2015, offering free workshops in underserved neighborhoods and donating lanterns to community centers.</p>
-            
-            <p>In 2020, during global lockdowns, Marcus opened "The Lantern Academy" - free online classes teaching basic lantern-making skills to people worldwide. Over 50,000 students from 120 countries have participated, many going on to start their own small businesses. This initiative earned the workshop the UNESCO Heritage Crafts Recognition in 2022.</p>
-            
-            <p>Today, the workshop employs 35 artisans, including Henrik's great-great-granddaughter Isabella, who at 19 is the youngest certified Master Lantern Maker in company history. That original Phoenix lantern from 1948 still hangs in the workshop entrance, a reminder that from the darkest moments, the brightest lights can emerge.</p>
+            <div class="timeline-item">
+                <h3>The Beginning - 1947</h3>
+                <p>On a cold November evening in 1947, Henrik Larsson stood in the ruins of what had once been his family's blacksmith forge. The Great Fire of '47 had swept through the old quarter, destroying everything in its path. With nothing but his grandfather's anvil, a handful of tools salvaged from the ashes, and an old kerosene lantern that had miraculously survived the flames, Henrik made a decision that would change his life forever.</p>
+                
+                <p>That surviving lantern, with its intricate brass framework and hand-cut glass panels, became his inspiration. Henrik remembered his grandfather's words: <strong>"In the darkest times, we must become the light."</strong> He spent the winter of 1947 in a borrowed shed, teaching himself the art of lantern-making by dismantling and studying that precious heirloom.</p>
+            </div>
+
+            <div class="timeline-item">
+                <h3>The First Workshop - 1948-1960</h3>
+                <p>By spring of 1948, Henrik had created his first original lantern - a simple copper and glass piece he called "The Phoenix." He sold it to the local church to replace candelabras lost in the fire. The priest was so impressed that he commissioned twelve more for the sanctuary. Word spread quickly through the rebuilding community.</p>
+                
+                <p>Henrik's workshop, located in a renovated stable behind the old market square, became a beacon of hope during the reconstruction years. He employed five apprentices, all young men who had lost their livelihoods in the fire. Together, they developed the "Recovery Collection" - affordable, beautiful lanterns that brought warmth and light back to devastated neighborhoods.</p>
+                
+                <div class="quote-box">
+                    But Henrik's true breakthrough came in 1952 when Lady Eleanor Winterbourne, visiting from England, discovered his work. She commissioned an elaborate series of forty lanterns for her estate's autumn gala. This single order not only saved the workshop from financial difficulties but caught the attention of aristocrats and wealthy merchants across Europe.
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>The Golden Era - 1961-1985</h3>
+                <p>Henrik's daughter, Astrid Larsson-Chen, joined the business in 1961 after studying art history in Paris and metalworking in Florence. She brought revolutionary ideas, blending her father's traditional techniques with modern artistic movements. Astrid introduced the concept of "themed collections," creating lantern series inspired by different historical periods and cultures.</p>
+                
+                <p>In 1968, Astrid met Master Glassblower Kenji Tanaka at an international crafts exhibition in Venice. Kenji had perfected a technique for creating hand-blown glass with embedded natural materials - pressed flowers, leaves, and even delicate insects preserved in crystal-clear glass. Their collaboration resulted in the legendary "Eternal Garden Collection," which sold out within three days of its debut and is now found in museums worldwide.</p>
+                
+                <p>The 1970s brought expansion. The workshop moved to its current location - a converted textile mill with soaring ceilings and abundant natural light. Henrik, though retired from daily work, designed what he called his "masterpiece" - the Grand Cathedral Lantern, standing seven feet tall with over 200 individual glass panels and weighing nearly 300 pounds. It took eighteen months to complete and now hangs in the National Museum of Decorative Arts.</p>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Challenges and Reinvention - 1986-2005</h3>
+                <p>The rise of mass-produced electric lighting in the 1980s nearly destroyed the traditional lantern market. Many historic workshops closed their doors. Henrik passed away in 1989, leaving Astrid to face the industry's darkest period. Sales dropped by 70% between 1986 and 1995.</p>
+                
+                <p>But Astrid refused to abandon her father's legacy. She made a bold decision: instead of competing with cheap imports, she would double down on artisanal quality and exclusivity. She reduced production volume by half but tripled the time spent on each piece. She also opened the workshop to public tours, teaching people about the dying art of lantern-making.</p>
+                
+                <p>In 1997, on the 50th anniversary of Henrik's first lantern, Astrid's son Marcus Chen proposed incorporating modern technology. Initially resistant, Astrid eventually agreed to experiment. Marcus developed a hybrid lantern that housed LED systems within traditional brass frameworks, combining the romance of vintage aesthetics with contemporary energy efficiency. The "Heritage Fusion Line" became their best-selling collection within two years.</p>
+            </div>
+
+            <div class="timeline-item">
+                <h3>The Modern Chapter - 2006-Present</h3>
+                <p>When Marcus officially took over as Master Craftsman in 2008, he honored both his grandfather's traditional methods and his mother's artistic vision while steering the business toward sustainability. He partnered with environmental organizations, ensuring all materials were ethically sourced and implementing a zero-waste production philosophy.</p>
+                
+                <p>The 2010s saw Lantern Emporium featured in prestigious design publications and TV documentaries. Celebrities and royalty became clients. But Marcus never forgot his great-grandfather's original mission: creating beautiful light accessible to all. He launched the "Community Lantern Project" in 2015, offering free workshops in underserved neighborhoods and donating lanterns to community centers.</p>
+                
+                <p>In 2020, during global lockdowns, Marcus opened "The Lantern Academy" - free online classes teaching basic lantern-making skills to people worldwide. Over 50,000 students from 120 countries have participated, many going on to start their own small businesses. This initiative earned the workshop the UNESCO Heritage Crafts Recognition in 2022.</p>
+                
+                <p>Today, the workshop employs 35 artisans, including Henrik's great-great-granddaughter Isabella, who at 19 is the youngest certified Master Lantern Maker in company history. That original Phoenix lantern from 1948 still hangs in the workshop entrance, a reminder that from the darkest moments, the brightest lights can emerge.</p>
+            </div>
         </section>
+
+        <div class="stats-highlight">
+            <div class="stat-card">
+                <span class="number">75+</span>
+                <span class="label">Years of Excellence</span>
+            </div>
+            <div class="stat-card">
+                <span class="number">50K+</span>
+                <span class="label">Students Trained</span>
+            </div>
+            <div class="stat-card">
+                <span class="number">120</span>
+                <span class="label">Countries Reached</span>
+            </div>
+            <div class="stat-card">
+                <span class="number">35</span>
+                <span class="label">Master Artisans</span>
+            </div>
+        </div>
 
         <section>
             <h2>The Art of Lantern-Making: Our Craftsmanship</h2>
