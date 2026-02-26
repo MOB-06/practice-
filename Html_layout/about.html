@@ -281,7 +281,30 @@
             font-weight: 600;
         }
 
+      /*special content boxes*/
+      .story-box {
+            background: linear-gradient(135deg, rgba(61, 30, 15, 0.4), rgba(45, 24, 16, 0.3));
+            border-left: 5px solid #D2691E;
+            padding: 30px;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
 
+        .story-box:hover {
+            transform: translateX(5px);
+            border-left-color: #FFD700;
+            box-shadow: 0 12px 35px rgba(210, 105, 30, 0.4);
+        }
+
+        .story-box h3 {
+            margin-top: 0;
+            color: #FFD700;
+        }
+
+        
      </style>
 </head>
 <body>
