@@ -303,6 +303,71 @@
             margin-top: 0;
             color: #FFD700;
         }
+        /* Highlighted Quote Boxes */
+        .quote-box {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.15), rgba(210, 105, 30, 0.1));
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 25px 35px;
+            margin: 2.5rem 0;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.15em;
+            color: #FFF8DC;
+            position: relative;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 4em;
+            color: rgba(255, 215, 0, 0.2);
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-family: Georgia, serif;
+        }
+
+        /* Stats/Numbers Highlight */
+        .stats-highlight {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 2.5rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.2), rgba(61, 30, 15, 0.3));
+            border: 1px solid rgba(210, 105, 30, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #FFD700;
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-card .number {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #FFD700;
+            display: block;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-card .label {
+            color: #CD853F;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
 
         
      </style>
