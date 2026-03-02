@@ -98,17 +98,17 @@ body {
    NAVBAR
    ========================================== */
 .navbar {
-    background: linear-gradient(135deg, #3d1e07, #6b330f, #8B4513);
-    padding: 0 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.15);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    height: 76px;
-    backdrop-filter: blur(10px);
+           background: linear-gradient(135deg, #8B4513, #D2691E, #daaf7c);
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 16px rgba(139, 69, 19, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
 }
 
 .navbar .logo {
