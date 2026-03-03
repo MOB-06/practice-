@@ -162,18 +162,90 @@ body {
 /* ==========================================
    HERO SECTION
    ========================================== */
-.hero {
-    background: linear-gradient(160deg, #1a0f07 0%, #3d1e07 30%, #6b330f 60%, #8B4513 100%);
-    color: white;
-    padding: 120px 40px 100px;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
+     .page-hero {
+            background: linear-gradient(135deg, #3d2216 0%, #2d1810 50%, #1e0f08 100%);
+            padding: 100px 40px 80px;
+            text-align: center;
+            border-bottom: 4px solid #D2691E;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .page-hero::after {
+            content: '🏮';
+            position: absolute;
+            font-size: 18em;
+            opacity: 0.04;
+            left: -80px;
+            bottom: -100px;
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.08; transform: scale(1); }
+            50% { opacity: 0.15; transform: scale(1.1); }
+        }
+
+        .page-hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.8em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .page-hero p {
+            font-size: 1.3em;
+            color: #e8d7bf;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-family: 'Cormorant Garamond', serif;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .hero-divider {
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            margin: 1.5rem auto;
+            border-radius: 2px;
+            animation: fadeInUp 1s ease-out 0.1s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
 .hero-overlay {
     position: absolute;
@@ -182,28 +254,6 @@ body {
         radial-gradient(ellipse at 20% 50%, rgba(210, 105, 30, 0.15) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 40%),
         radial-gradient(ellipse at 50% 80%, rgba(139, 69, 19, 0.2) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-.hero::before {
-    content: '🏮';
-    position: absolute;
-    font-size: 20em;
-    opacity: 0.04;
-    right: -60px;
-    top: -80px;
-    transform: rotate(15deg);
-    pointer-events: none;
-}
-
-.hero::after {
-    content: '🏮';
-    position: absolute;
-    font-size: 12em;
-    opacity: 0.03;
-    left: -30px;
-    bottom: -40px;
-    transform: rotate(-20deg);
     pointer-events: none;
 }
 
@@ -222,25 +272,6 @@ body {
     color: #E8913A;
     margin-bottom: 24px;
     font-weight: 500;
-}
-
-.hero h1 {
-    font-size: 4em;
-    margin-bottom: 1.5rem;
-    font-family: 'Cinzel', serif;
-    color: #FFD700;
-    letter-spacing: 2px;
-    line-height: 1.15;
-    text-shadow: 0 2px 40px rgba(210, 105, 30, 0.3);
-}
-
-.hero p {
-    font-size: 1.2em;
-    max-width: 650px;
-    margin: 0 auto 40px;
-    line-height: 1.8;
-    color: rgba(255, 248, 220, 0.8);
-    font-weight: 300;
 }
 
 .hero-buttons {
@@ -1053,7 +1084,7 @@ footer {
     </header>
 
     <!-- ========== HERO SECTION ========== -->
-    <section class="hero">
+    <section class="page-hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <span class="hero-badge">✦ Est. Since Generations ✦</span>
