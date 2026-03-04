@@ -3,221 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Navigation Bar Page</title>
-    <style>
-
-         *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Lato', 'Segoe UI', sans-serif;
-            line-height: 1.7;
-           background: linear-gradient(135deg, #8A361A 10%, #B43E0E 50%, #8F1A00 100%);
-            background-attachment: fixed;
-            color: #d4c4a8;
-            overflow-x: hidden;
-        }
-
-        /* Navbar Styles */
-        .navbar {
-            background: linear-gradient(135deg, #8B4513, #D2691E, #daaf7c);
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 16px rgba(139, 69, 19, 0.5);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            height: 80px;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .navbar .logo {
-            color: #FFD700;
-            font-size: 1.9em;
-            font-weight: 900;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-            font-family: 'Cinzel', serif;
-            letter-spacing: 3px;
-            transition: all 0.3s ease;
-        }
-
-        .navbar .logo:hover {
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-            transform: scale(1.02);
-        }
-
-        .navbar ul {
-            list-style: none;
-            display: flex;
-            gap: 0.8rem;
-        }
-
-        .navbar ul li a {
-            color: #FFF8DC;
-            text-decoration: none;
-            font-size: 1.05em;
-            padding: 0.6rem 1.4rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            display: inline-block;
-            letter-spacing: 0.5px;
-        }
-
-        .navbar ul li a:hover,
-        .navbar ul li a.active {
-            background-color: rgba(255, 215, 0, 0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            color: #FFD700;
-        }
-
-
-     .container {
-            max-width: 2000px;
-            background-color: #b6762e;
-            margin: 2rem auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 0 20px;
-            flex: 1; /* Pushes footer down */
-             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            padding: 20px;
-     }
-
-     /* Individual Card Blocks */
-        .card1 {
-            background: linear-gradient(135deg, #D16002, #FAB972, #E27A53);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-
-    .card2 {
-        background: linear-gradient(135deg, #D16002, #FAB972, #E27A53);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-    }
-    .card3 {
-            background: linear-gradient(135deg, #D16002, #FAB972, #E27A53);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-    }
-
-        
-        /* Hover effect for cards */
-        .card:hover ,.card1:hover, .card2:hover, .card3:hover {
-            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
-            transform: translateY(-8px);
-            border: 2px solid #D2691E;
-        }
-         /* Styling for the Form Card specifically */
-        .cardform {
-            background: linear-gradient(135deg, #D16002, #FAB972, #E27A53);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.15);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        .cardform input, .cardform textarea {
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 8px;
-           
-            
-        }
-        .cardform:hover {
-              box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
-            transform: translateY(-8px);
-            border: 2px solid #D2691E;
-           
-        }
-        .card1 iframe, .card2 iframe {
-    width: 300px;
-    height: 150px;
-    border-radius: 10px;
-    
-}
-
-     </style>
+    <title>Contact Us - Lantern Emporium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- ========== NAVBAR ========== -->
-       <header>
-        <nav class="navbar">
-            <div class="logo"> 🏮 Lantern Emporium </div>
-            <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a class="active" href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-      <div class="container">
-
-        <div class="card1">
-            <h3>Location</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.9367658586443!2d135.84589697416325!3d34.681545372926536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600139c06bb06ad5%3A0x4c97e78382e39596!2sKasugataisha%20Shrine!5e0!3m2!1sen!2snp!4v1771666867149!5m2!1sen!2snp"
-             width="600"
-             height="450" style="border:0;" allowfullscreen="" loading="lazy"
-             referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <!-- NAVBAR -->
+     <nav class="navbar">
+        <div class="logo">🏮 Lantern Emporium </div>
+        <ul class="nav-links">
+            <li><a href="homeS.html">Home</a></li>
+            <li><a href="about.html">About </a></li>
+            <li><a href="products.html">services</a></li>
+            <li><a class="active" href="contact.html">Contact </a></li>
+        </ul>
+     </nav>
+     <!-- HERO VIDEO SECTION -->
+    <section class="hero-video">
+        <h1>Get In Touch</h1>
+        <p>Watch our workshop tour below, then reach out — we'd love to hear from you.</p>
+        
+        <div class="video-wrapper">
+            <iframe 
+                src="https://www.youtube.com/embed/Y6AJJT1sHr0" 
+                title="Workshop Tour Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
         </div>
+    </section>
 
+    <!-- MAIN CONTACT SECTION -->
+    <main class="contact-main">
+        <div class="contact-grid">
+            <!-- CONTACT FORM - LEFT -->
+            <div class="form-section">
+                <h2>Send a Message</h2>
+                <p class="subtitle">Fill out the form below and we'll get back to you within 24 hours</p>
+                
+                <form id="contactForm" onsubmit="return handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe" required>
+                    </div>
 
-        <div class="card2">
-            <h3>Video</h3>
-            <p style="color: #666;">[Introduction Video Here]</p>
-            
-            <iframe width="600"
-                    height="350" 
-                    
-                    padding="20px"
-                    src="https://www.youtube.com/embed/Y6AJJT1sHr0" 
-                    title="YouTube video player" 
-                    style="border: 2px; border-radius: 10px;" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message *</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your inquiry..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+
+                    <div id="successMsg" class="success-msg">
+                        ✓ Message sent! We'll respond within 24 hours.
+                    </div>
+                </form>
+            </div>
+
+            <!-- CONTACT INFO - RIGHT -->
+            <div class="info-section">
+                <h2>Contact Information</h2>
+
+                <div class="info-card">
+                    <h3> Visit Our Workshop</h3>
+                    <p>123 Artisan Lane, Building C<br>
+                    Old Quarter District<br>
+                    Heritage City, HC 12345</p>
+                    <p><em>Free parking available on-site</em></p>
+                </div>
+
+                <div class="info-card">
+                    <h3> Call Us</h3>
+                    <p><strong>Main Office:</strong> <a href="tel:+15550123456">(555) 012-3456</a></p>
+                    <p><strong>Workshop Tours:</strong> <a href="tel:+15550123457">(555) 012-3457</a></p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Email Us</h3>
+                    <p><strong>General Inquiries:</strong><br>
+                    <a href="mailto:info@lanternemporium.com">info@lanternemporium.com</a></p>
+                    <p><strong>Custom Orders:</strong><br>
+                    <a href="mailto:custom@lanternemporium.com">custom@lanternemporium.com</a></p>
+                </div>
+
+                <div class="info-card">
+                    <h3> Business Hours</h3>
+                    <p><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM<br>
+                    <strong>Saturday:</strong> 10:00 AM - 4:00 PM<br>
+                    <strong>Sunday:</strong> Closed</p>
+                </div>
+
+                <div class="info-card">
+                    <h3> Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook" aria-label="Facebook">📘</a>
+                        <a href="#" class="social-link" title="Instagram" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-link" title="Twitter" aria-label="Twitter">🐦</a>
+                        <a href="#" class="social-link" title="YouTube" aria-label="YouTube">📹</a>
+                    </div>
+                </div>
+            </div>
         </div>
+    </main>
 
-        <div class="card3">
-            <h3>Office Details</h3>
-            <p><strong>Address:</strong> 123 Tech Lane</p>
-            <p><strong>Phone:</strong> (555) 012-3456</p>
-        </div>
-
-        <div class="cardform">
-            <h3>Contact Form</h3>
-            <input type="text" placeholder="Your Name">
-            <input type="email" placeholder="Your Email">
-            <button style="padding: 5px 15px; cursor: pointer;">Submit</button>
-        </div>
-    </div>
-     
-           
 </body>
 </html>
