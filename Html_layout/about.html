@@ -430,6 +430,245 @@
             color: #FFD700;
             font-size: 1.3em;
         }
+    /* call to action section  */
+
+        .cta-section {
+            background: linear-gradient(135deg, #D2691E 0%, #8B4513 100%);
+            padding: 60px 40px;
+            text-align: center;
+            border-radius: 16px;
+            margin: 80px 0 60px;
+            box-shadow: 0 12px 40px rgba(139, 69, 19, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            top: -100px;
+            left: -100px;
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        .cta-section h2 {
+            color: #FFD700;
+            border: none;
+            font-size: 2.6em;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2::after {
+            display: none;
+        }
+
+        .cta-section p {
+            color: #FFF8DC;
+            font-size: 1.2em;
+            max-width: 650px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #FFD700;
+            color: #2d1810;
+            padding: 16px 50px;
+            border-radius: 50px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            background: #FFF8DC;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.6);
+        }
+/* footer  */
+        footer {
+            background: linear-gradient(135deg, #0d0805, #1a0f07);
+            color: #8B6842;
+            padding: 40px 30px;
+            text-align: center;
+            border-top: 3px solid #8B4513;
+            margin-top: 60px;
+        }
+
+        footer p {
+            font-size: 1em;
+            letter-spacing: 1px;
+            line-height: 1.8;
+        }
+
+        footer a {
+            color: #D2691E;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        footer a:hover {
+            color: #FFD700;
+            border-bottom-color: #FFD700;
+        }
+
+        /*scroll to up button  */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #D2691E, #8B4513);
+            color: #FFD700;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
+            z-index: 999;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #2d1810;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+        }
+
+        /* respoomsive design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+                gap: 1rem;
+            }
+
+            .navbar .logo {
+                font-size: 1.5em;
+            }
+
+            .navbar ul {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+
+            .navbar ul li a {
+                padding: 0.5rem 1rem;
+                font-size: 0.95em;
+            }
+
+            .page-hero {
+                padding: 60px 20px 50px;
+            }
+
+            .page-hero h1 {
+                font-size: 2.2em;
+                letter-spacing: 2px;
+            }
+
+            .page-hero p {
+                font-size: 1.05em;
+            }
+
+            main {
+                padding: 40px 20px;
+            }
+
+            section {
+                margin-bottom: 50px;
+            }
+
+            section h2 {
+                font-size: 1.8em;
+            }
+
+            section h3 {
+                font-size: 1.4em;
+            }
+
+            section p {
+                text-align: left;
+            }
+
+            .collections-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-highlight {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 40px 25px;
+                margin: 50px 0 40px;
+            }
+
+            .cta-section h2 {
+                font-size: 1.8em;
+            }
+
+            .cta-button {
+                padding: 14px 35px;
+                font-size: 1em;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            main {
+                padding: 50px 30px;
+            }
+
+            .collections-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ==========================================
+           ACCESSIBILITY ENHANCEMENTS
+           ========================================== */
+        :focus {
+            outline: 3px solid #FFD700;
+            outline-offset: 3px;
+        }
+
+        ::selection {
+            background: #D2691E;
+            color: #FFF8DC;
+        }
+
+        /* Smooth hover transitions for all interactive elements */
+        a, button, .service-card, .collection-card {
+            transition: all 0.3s ease;
+        }
 
      </style>
 </head>
