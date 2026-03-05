@@ -250,6 +250,97 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+            /* Contact info  RIGHT SIDE */
+            .info-section h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary-gold);
+            font-size: 2em;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(210, 105, 30, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-color: var(--primary-gold);
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15);
+        }
+
+        .info-card h3 {
+            color: var(--secondary-orange);
+            font-size: 1.2em;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .info-card a:hover {
+            color: var(--secondary-orange);
+            border-bottom-color: var(--secondary-orange);
+        }
+
+        .info-card strong {
+            color: var(--text-light);
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(210, 105, 30, 0.2));
+            border: 2px solid rgba(210, 105, 30, 0.4);
+            border-radius: 25px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, var(--brown-medium), var(--brown-dark));
+            border-color: var(--primary-gold);
+            color: var(--primary-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .social-link:active {
+            transform: translateY(-1px);
+        }
+            /* Map section */
+           
     </style>
 </head>
 <body>
