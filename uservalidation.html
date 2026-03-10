@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="return validateUser()">
+        <label for="username">Username:</label>
+        <input type="text" id="username" required>
+    </form>
+    <script>
+        function validateUser(){
+            const usernameInput = document.getElementById('username');
+            const username = usernameInput.value;
+            const usernamePattern = /^[a-z][a-zA-Z0-9_]{5,15}$/;
+
+            if (!usernamePattern.test(username)) {
+                alert('Username must be 5-15 characters long and can only contain letters, numbers, and underscores.');
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+</html>
