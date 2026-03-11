@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Form Validation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 300px;
+        padding: 8px;
+        margin: 5px 0;
+        box-sizing: border-box;
+      }
+      input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <form name="myForm" onsubmit="return validateForm();">
+        Name: <input type="text" name="name" id="name" /><br /><br />
+
+        Email: <input type="text" name="email" id="email" /><br /><br />
+
+        Password:
+        <input type="password" name="password" id="password" /><br /><br />
+
+        Age: <input type="text" name="age" id="age" /><br /><br />
+
+        Phone Number: <input type="text" name="phone" id="phone" /><br /><br />
+
+        Date: <input type="date" name="date" id="date" /><br /><br />
+
+        <input type="submit" value="Submit" />
+        
+      </form>
+    </div>
+
+    <script>
+      function validateForm() {
+        const name = document.myForm.name.value;
+        const email = document.myForm.email.value;
+        const password = document.myForm.password.value;
+        const age = document.myForm.age.value;
+        const phone = document.myForm.phone.value;
+        const date = document.myForm.date.value;
+
+        const namePattern = /^[a-zA-Z\s]{3,7}$/;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordPattern = /^.{6,}$/;
+        const phonePattern = /^\9[6-8]\d{8}$/;
+        const agePattern = /^(1[8-9]|[2-9]\d)$/;
+        const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+
+        if (!namePattern.test(name)) {
+          alert("Name must be at least 3 letters");
+          return false;
+        }
+        if (!phonePattern.test(phone)) {
+          alert(
+            "Enter a valid phone number starting with 9 and followed by 8 digits",
+          );
+          return false;
+        }
+        if (!emailPattern.test(email)) {
+          alert("Enter a valid email");
+          return false;
+        }
+        if (!passwordPattern.test(password)) {
+          alert("Password must be at least 6 characters");
+          return false;
+        }
+        if (!datePattern.test(date)) {
+          alert("Enter a valid date in YYYY-MM-DD format");
+          return false;
+        }
+        if (!agePattern.test(age)) {
+          alert("Age must be 18 or above");
+          return false;
+        }
+
+        alert("Form submitted successfully!");
+        return true;
+      }
+    </script>
+
+ 
+        
+  </body>
+</html>
