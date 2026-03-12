@@ -57,12 +57,12 @@
         const phone = document.myForm.phone.value;
         const date = document.myForm.date.value;
 
-        const namePattern = /^[a-zA-Z\s]{3,7}$/;
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const namePattern = /^[a-zA-Z\s]+$/;
+        const emailPattern = /^[^\s@]+@gmalil\.com+$/;
         const passwordPattern = /^.{6,}$/;
         const phonePattern = /^\9[6-8]\d{8}$/;
         const agePattern = /^(1[8-9]|[2-9]\d)$/;
-        const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+        const datePattern = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
         if (!namePattern.test(name)) {
           alert("Name must be at least 3 letters");

@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Date Formats — JavaScript Reference</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0c0f14;
+      --surface: #131820;
+      --border:  #1e2733;
+      --accent:  #00e5a0;
+      --accent2: #00b3ff;
+      --warn:    #ffb020;
+      --pink:    #f472b6;
+      --text:    #e8edf4;
+      --muted:   #5a6880;
+      --code-bg: #0a1520;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Sora', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,160,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,160,.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ───────── HEADER ───────── */
+    header {
+      position: relative; z-index: 1;
+      padding: 52px 40px 30px;
+      max-width: 1100px; margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: .18em;
+      color: var(--accent); text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    header h1 {
+      font-size: clamp(28px,4vw,46px);
+      font-weight: 700; line-height: 1.1; letter-spacing: -.02em;
+    }
+    header h1 span {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .header-sub { margin-top: 10px; color: var(--muted); font-size: 14px; font-weight: 300; }
+
+    .live-clock {
+      margin-top: 20px; display: inline-flex; align-items: center;
+      gap: 10px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 9px 16px; font-family: 'Space Mono', monospace; font-size: 13px;
+    }
+    .clock-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.75)}
+    }
+    #live-time { color: var(--accent); font-weight: 700; }
+
+    /* ───────── SHARED WRAPPER ───────── */
+    .wrap {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ───────── SECTION TITLE ───────── */
+    .sec-title {
+      padding: 44px 0 8px;
+      border-top: 1px solid var(--border);
+    }
+    .sec-title:first-child { border-top: none; padding-top: 36px; }
+    .sec-title h2 {
+      font-size: clamp(20px,3vw,32px);
+      font-weight: 700; letter-spacing: -.02em; line-height: 1.2;
+    }
+    .sec-title h2 span {
+      background: linear-gradient(90deg, var(--warn), #ff6b35);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .sec-title p { margin-top: 6px; color: var(--muted); font-size: 13.5px; font-weight: 300; }
+
+    /* ───────── CARD GRID ───────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px,1fr));
+      gap: 18px; margin-top: 28px; padding-bottom: 60px;
+    }
+
+    /* ───────── JS REFERENCE CARD ───────── */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      transition: border-color .2s, transform .2s;
+      animation: fadeUp .5s ease both;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    @keyframes fadeUp {
+      from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)}
+    }
+    .card-header {
+      padding: 14px 18px 11px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .card-title { font-size: 12.5px; font-weight: 600; color: var(--text); }
+    .badge {
+      font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+    }
+    .b-green  { background: rgba(0,229,160,.12);  color: var(--accent); }
+    .b-blue   { background: rgba(0,179,255,.12);  color: var(--accent2); }
+    .b-yellow { background: rgba(255,176,32,.12); color: var(--warn); }
+    .b-pink   { background: rgba(244,114,182,.12);color: var(--pink); }
+
+    .card-value {
+      padding: 16px 18px 6px;
+      font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700;
+      color: var(--accent); word-break: break-all; min-height: 50px;
+    }
+    .card-code {
+      margin: 0 18px 18px; background: var(--code-bg);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 11px 13px; font-family: 'Space Mono', monospace;
+      font-size: 11px; line-height: 1.7; color: #7ec8e3;
+      overflow-x: auto; white-space: pre;
+    }
+    .kw  { color: #c792ea; } .fn  { color: #82aaff; }
+    .st  { color: #c3e88d; } .nm  { color: var(--warn); }
+    .cm  { color: var(--muted); font-style: italic; }
+
+    .section-label {
+      grid-column: 1/-1;
+      font-family: 'Space Mono', monospace; font-size: 10px;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+      padding: 6px 4px 0; border-top: 1px solid var(--border); margin-top: 6px;
+    }
+    .section-label:first-child { border-top: none; margin-top: 0; }
+
+    /* ───────── FORM CARD ───────── */
+    .fcard {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      transition: border-color .2s, transform .2s;
+      animation: fadeUp .5s ease both;
+    }
+    .fcard:hover { border-color: var(--warn); transform: translateY(-3px); }
+
+    .fcard-header {
+      padding: 14px 18px 11px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .fcard-title { font-size: 12.5px; font-weight: 600; color: var(--text); }
+
+    .b-orange { background: rgba(255,176,32,.12); color: var(--warn); }
+    .b-red    { background: rgba(239,68,68,.12);  color: #f87171; }
+    .b-purple { background: rgba(167,139,250,.12);color: #a78bfa; }
+
+    .fcard-body { padding: 16px 18px 12px; }
+
+    .inp-label {
+      font-family: 'Space Mono', monospace; font-size: 9.5px;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 7px; display: block;
+    }
+
+    /* all native inputs */
+    .fcard input[type="date"],
+    .fcard input[type="time"],
+    .fcard input[type="datetime-local"],
+    .fcard input[type="month"],
+    .fcard input[type="week"],
+    .fcard input[type="number"],
+    .fcard input[type="text"],
+    .fcard select {
+      width: 100%; background: var(--code-bg);
+      border: 1px solid var(--border); border-radius: 7px;
+      color: var(--text); font-family: 'Space Mono', monospace;
+      font-size: 12.5px; padding: 9px 13px; outline: none;
+      transition: border-color .18s, box-shadow .18s;
+      color-scheme: dark; appearance: auto; -webkit-appearance: auto;
+    }
+    .fcard input:focus, .fcard select:focus {
+      border-color: var(--warn);
+      box-shadow: 0 0 0 3px rgba(255,176,32,.1);
+    }
+    .fcard input.is-valid   { border-color: var(--accent) !important; }
+    .fcard input.is-invalid { border-color: #f87171 !important; }
+
+    .inp-row { display: flex; gap: 7px; }
+    .inp-row > * { flex: 1; }
+    .inp-hint {
+      font-family: 'Space Mono', monospace; font-size: 9px;
+      color: var(--muted); margin-top: 5px; letter-spacing: .04em;
+    }
+
+    .parsed {
+      margin: 0 18px; background: var(--code-bg);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 9px 13px; font-family: 'Space Mono', monospace;
+      font-size: 11px; color: var(--accent); min-height: 33px;
+      word-break: break-all; line-height: 1.55;
+    }
+    .parsed-lbl {
+      font-size: 8.5px; color: var(--muted);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2px;
+    }
+    .fcard .card-code { margin: 10px 18px 16px; font-size: 10.5px; }
+
+    /* slot buttons */
+    .slot-grid {
+      display: none; grid-template-columns: repeat(3,1fr);
+      gap: 5px; margin-top: 7px;
+    }
+    .slot-btn {
+      font-family: 'Space Mono', monospace; font-size: 10px;
+      padding: 6px 4px; border-radius: 5px; cursor: pointer;
+      transition: all .15s; border-width: 1px; border-style: solid;
+    }
+
+    /* footer */
+    footer {
+      position: relative; z-index: 1; text-align: center;
+      padding: 22px; color: var(--muted);
+      font-size: 11.5px; font-family: 'Space Mono', monospace;
+      border-top: 1px solid var(--border);
+    }
+
+    @media(max-width:600px){
+      header,.wrap{padding-left:18px;padding-right:18px;}
+      .grid,.grid.form-grid{grid-template-columns:1fr;}
+    }
+
+    /* stagger delays */
+    .card:nth-child(1){animation-delay:.03s}.card:nth-child(2){animation-delay:.06s}
+    .card:nth-child(3){animation-delay:.09s}.card:nth-child(4){animation-delay:.12s}
+    .card:nth-child(5){animation-delay:.15s}.card:nth-child(6){animation-delay:.18s}
+    .card:nth-child(7){animation-delay:.21s}.card:nth-child(8){animation-delay:.24s}
+    .card:nth-child(9){animation-delay:.27s}.card:nth-child(10){animation-delay:.30s}
+    .card:nth-child(11){animation-delay:.33s}.card:nth-child(12){animation-delay:.36s}
+    .card:nth-child(13){animation-delay:.39s}.card:nth-child(14){animation-delay:.42s}
+    .card:nth-child(15){animation-delay:.45s}.card:nth-child(16){animation-delay:.48s}
+    .card:nth-child(17){animation-delay:.51s}.card:nth-child(18){animation-delay:.54s}
+    .card:nth-child(19){animation-delay:.57s}.card:nth-child(20){animation-delay:.60s}
+    .fcard:nth-child(1){animation-delay:.04s}.fcard:nth-child(2){animation-delay:.08s}
+    .fcard:nth-child(3){animation-delay:.12s}.fcard:nth-child(4){animation-delay:.16s}
+    .fcard:nth-child(5){animation-delay:.20s}.fcard:nth-child(6){animation-delay:.24s}
+    .fcard:nth-child(7){animation-delay:.28s}.fcard:nth-child(8){animation-delay:.32s}
+    .fcard:nth-child(9){animation-delay:.36s}.fcard:nth-child(10){animation-delay:.40s}
+    .fcard:nth-child(11){animation-delay:.44s}.fcard:nth-child(12){animation-delay:.48s}
+  </style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header>
+  <p class="eyebrow">// JavaScript Reference</p>
+  <h1>Date <span>Formats</span></h1>
+  <p class="header-sub">All major date formatting methods + interactive form input types — powered by inline JavaScript</p>
+  <div class="live-clock">
+    <span class="clock-dot"></span>
+    <span>Live →</span>
+    <span id="live-time">--:--:--</span>
+  </div>
+</header>
+
+<!-- ═══════ SECTION 1: JS REFERENCE ═══════ -->
+<div class="wrap">
+  <div class="sec-title" style="border-top:none">
+    <p class="eyebrow">// Section 01</p>
+    <h2>JavaScript Date <span style="-webkit-text-fill-color:transparent;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text">Output Methods</span></h2>
+    <p>Live output generated with <code style="font-family:'Space Mono',monospace;color:var(--accent2);font-size:12px;">new Date()</code> — all formats displayed using inline JS</p>
+  </div>
+  <div class="grid" id="js-grid"></div>
+</div>
+
+<!-- ═══════ SECTION 2: FORM INPUTS ═══════ -->
+<div class="wrap">
+  <div class="sec-title">
+    <p class="eyebrow">// Section 02</p>
+    <h2>Date Formats in <span>Form Filling</span></h2>
+    <p>Interactive HTML input types — type a date or pick from calendar. Output parsed live via inline JavaScript.</p>
+  </div>
+  <div class="grid" id="form-grid">
+
+    <!-- 1. DATE PICKER -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">📅 Date Picker</span>
+        <span class="badge b-orange">type="date"</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Select or type a date</span>
+        <input type="date" id="f-date"
+          oninput="var v=this.value,o=document.getElementById('o-date');
+            if(v){var d=new Date(v+'T00:00:00'),
+              mo=['January','February','March','April','May','June','July','August','September','October','November','December'],
+              dy=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+              o.innerHTML='<span class=parsed-lbl>Parsed</span><br>'+dy[d.getDay()]+', '+mo[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();}
+            else o.textContent='—';"
+        />
+        <p class="inp-hint">Stored value: YYYY-MM-DD &nbsp;·&nbsp; e.g. 2024-07-15</p>
+      </div>
+      <div class="parsed" id="o-date">—</div>
+      <pre class="card-code"><span class="kw">&lt;input</span> <span class="fn">type</span>=<span class="st">"date"</span> <span class="fn">id</span>=<span class="st">"d"</span> <span class="kw">/&gt;</span>
+
+<span class="cm">// Read in JS:</span>
+<span class="kw">var</span> v = document.<span class="fn">getElementById</span>(<span class="st">"d"</span>).value;
+<span class="cm">// v = "2024-07-15"</span>
+<span class="kw">new</span> <span class="fn">Date</span>(v + <span class="st">"T00:00:00"</span>);</pre>
+    </div>
+
+    <!-- 2. TIME PICKER -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">🕐 Time Picker</span>
+        <span class="badge b-orange">type="time"</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Select or type a time</span>
+        <input type="time" id="f-time"
+          oninput="var v=this.value,o=document.getElementById('o-time');
+            if(v){var p=v.split(':'),h=+p[0],m=+p[1],
+              ap=h>=12?'PM':'AM',h12=h%12||12;
+              o.innerHTML='<span class=parsed-lbl>12-hour</span> '+
+                String(h12).padStart(2,'0')+':'+String(m).padStart(2,'0')+' '+ap+
+                ' &nbsp;·&nbsp; <span class=parsed-lbl>24-hour</span> '+v;}
+            else o.textContent='—';"
+        />
+        <p class="inp-hint">Stored value: HH:MM (24h) &nbsp;·&nbsp; e.g. 14:30</p>
+      </div>
+      <div class="parsed" id="o-time">—</div>
+      <pre class="card-code"><span class="kw">&lt;input</span> <span class="fn">type</span>=<span class="st">"time"</span> <span class="fn">id</span>=<span class="st">"t"</span> <span class="kw">/&gt;</span>
+
+<span class="cm">// Value is always 24h format:</span>
+<span class="cm">// "08:30" or "14:45"</span>
+<span class="cm">// Convert to 12h manually</span>
+<span class="kw">var</span> h12 = h%<span class="nm">12</span> || <span class="nm">12</span>;</pre>
+    </div>
+
+    <!-- 3. DATETIME-LOCAL -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">📆 Date &amp; Time Combined</span>
+        <span class="badge b-orange">datetime-local</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Pick date and time together</span>
+        <input type="datetime-local" id="f-dtl"
+          oninput="var v=this.value,o=document.getElementById('o-dtl');
+            if(v){var d=new Date(v);
+              o.innerHTML='<span class=parsed-lbl>ISO</span> '+d.toISOString()+
+                '<br><span class=parsed-lbl>Locale</span> '+d.toLocaleString();}
+            else o.textContent='—';"
+        />
+        <p class="inp-hint">Stored: YYYY-MM-DDTHH:MM &nbsp;·&nbsp; e.g. 2024-07-15T14:30</p>
+      </div>
+      <div class="parsed" id="o-dtl">—</div>
+      <pre class="card-code"><span class="kw">&lt;input</span> <span class="fn">type</span>=<span class="st">"datetime-local"</span> <span class="kw">/&gt;</span>
+
+<span class="cm">// Value: "2024-07-15T14:30"</span>
+<span class="kw">new</span> <span class="fn">Date</span>(value).<span class="fn">toISOString</span>();
+<span class="cm">// "2024-07-15T14:30:00.000Z"</span></pre>
+    </div>
+
+    <!-- 4. MONTH PICKER -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">🗓 Month Picker</span>
+        <span class="badge b-purple">type="month"</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Select a month and year</span>
+        <input type="month" id="f-month"
+          oninput="var v=this.value,o=document.getElementById('o-month');
+            if(v){var p=v.split('-'),yr=p[0],mo=+p[1],
+              mN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+              o.innerHTML='<span class=parsed-lbl>Full</span> '+mN[mo-1]+' '+yr+
+                ' &nbsp;·&nbsp; <span class=parsed-lbl>Quarter</span> Q'+Math.ceil(mo/3)+'/'+yr;}
+            else o.textContent='—';"
+        />
+        <p class="inp-hint">Stored: YYYY-MM &nbsp;·&nbsp; Use for: billing, credit expiry, reports</p>
+      </div>
+      <div class="parsed" id="o-month">—</div>
+      <pre class="card-code"><span class="kw">&lt;input</span> <span class="fn">type</span>=<span class="st">"month"</span> <span class="kw">/&gt;</span>
+
+<span class="cm">// Value: "2024-07"</span>
+<span class="kw">var</span> [yr, mo] = value.<span class="fn">split</span>(<span class="st">'-'</span>);
+<span class="cm">// Q = Math.ceil(mo / 3)</span></pre>
+    </div>
+
+    <!-- 5. WEEK PICKER -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">📋 Week Picker</span>
+        <span class="badge b-purple">type="week"</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Select an ISO week number</span>
+        <input type="week" id="f-week"
+          oninput="var v=this.value,o=document.getElementById('o-week');
+            if(v){var p=v.split('-W'),yr=+p[0],wk=+p[1];
+              var j4=new Date(yr,0,4);
+              var mon=new Date(j4.getTime()+(wk-1)*7*86400000-(((j4.getDay()||7)-1)*86400000));
+              var sun=new Date(mon.getTime()+6*86400000);
+              var f=function(d){return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear();};
+              o.innerHTML='<span class=parsed-lbl>Week '+wk+'</span> '+f(mon)+' – '+f(sun);}
+            else o.textContent='—';"
+        />
+        <p class="inp-hint">Stored: YYYY-Www &nbsp;·&nbsp; Use for: sprints, payroll, scheduling</p>
+      </div>
+      <div class="parsed" id="o-week">—</div>
+      <pre class="card-code"><span class="kw">&lt;input</span> <span class="fn">type</span>=<span class="st">"week"</span> <span class="kw">/&gt;</span>
+
+<span class="cm">// Value: "2024-W28"</span>
+<span class="cm">// Get Monday of that week:</span>
+<span class="kw">var</span> mon = <span class="kw">new</span> <span class="fn">Date</span>(jan4.getTime()
+  + (wk<span class="nm">-1</span>)*<span class="nm">7</span>*<span class="nm">86400000</span> - offset);</pre>
+    </div>
+
+    <!-- 6. THREE SEPARATE FIELDS (DD MM YYYY) -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">✏️ DD / MM / YYYY Separate Fields</span>
+        <span class="badge b-red">Manual</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Type each part — gov / passport style</span>
+        <div class="inp-row">
+          <input type="number" id="f3-dd" min="1" max="31" placeholder="DD" style="text-align:center" oninput="parse3()"/>
+          <input type="number" id="f3-mm" min="1" max="12" placeholder="MM" style="text-align:center" oninput="parse3()"/>
+          <input type="number" id="f3-yy" min="1900" max="2100" placeholder="YYYY" oninput="parse3()"/>
+        </div>
+        <p class="inp-hint">Common in: government forms, visa applications, bank KYC</p>
+      </div>
+      <div class="parsed" id="o-3fields">—</div>
+      <pre class="card-code"><span class="cm">// Three &lt;input type="number"&gt;</span>
+<span class="kw">var</span> d = <span class="kw">new</span> <span class="fn">Date</span>(yy, mm<span class="nm">-1</span>, dd);
+<span class="cm">// Validate: month didn't overflow</span>
+<span class="kw">var</span> ok = d.<span class="fn">getMonth</span>() === mm<span class="nm">-1</span>;</pre>
+    </div>
+
+    <!-- 7. MASKED TEXT INPUT -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">⌨️ Auto-masked Text Input</span>
+        <span class="badge b-red">Masked</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Type date — hyphens inserted automatically</span>
+        <input type="text" id="f-mask" placeholder="DD-MM-YYYY" maxlength="10"
+          oninput="var raw=this.value.replace(/\D/g,'').slice(0,8),out='';
+            if(raw.length>4)out=raw.slice(0,2)+'-'+raw.slice(2,4)+'-'+raw.slice(4);
+            else if(raw.length>2)out=raw.slice(0,2)+'-'+raw.slice(2);
+            else out=raw;
+            this.value=out;
+            var o=document.getElementById('o-mask'),
+              mS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            if(raw.length===8){
+              var dd=+raw.slice(0,2),mm=+raw.slice(2,4),yy=+raw.slice(4);
+              var d=new Date(yy,mm-1,dd);
+              var ok=d.getFullYear()===yy&&d.getMonth()===mm-1&&d.getDate()===dd;
+              this.className=ok?'is-valid':'is-invalid';
+              o.innerHTML=ok?'<span style=color:var(--accent)>✔ Valid:</span> '+dd+' '+mS[mm-1]+' '+yy:
+                '<span style=color:#f87171>✘ Invalid date</span>';
+            }else{this.className='';o.textContent='—';}"
+        />
+        <p class="inp-hint">Auto-inserts <code>-</code> · validates when complete · green = valid</p>
+      </div>
+      <div class="parsed" id="o-mask">—</div>
+      <pre class="card-code"><span class="cm">// Strip non-digits, re-insert '-'</span>
+<span class="kw">var</span> r = val.<span class="fn">replace</span>(<span class="st">/\D/g</span>, <span class="st">''</span>);
+r.slice(<span class="nm">0,2</span>)+<span class="st">'-'</span>+r.slice(<span class="nm">2,4</span>)+<span class="st">'-'</span>+r.slice(<span class="nm">4</span>);
+<span class="cm">// Validate with new Date()</span></pre>
+    </div>
+
+    <!-- 8. DROPDOWN SELECTS -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">🔽 Dropdown Day / Month / Year</span>
+        <span class="badge b-orange">&lt;select&gt;</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Classic dropdown style — wide browser support</span>
+        <div class="inp-row">
+          <select id="sd-day" onchange="parseDrop()"><option value="">Day</option></select>
+          <select id="sd-mon" onchange="parseDrop()"><option value="">Month</option></select>
+          <select id="sd-yr"  onchange="parseDrop()"><option value="">Year</option></select>
+        </div>
+        <p class="inp-hint">Used in: insurance, job applications, legacy systems</p>
+      </div>
+      <div class="parsed" id="o-drop">—</div>
+      <pre class="card-code"><span class="cm">// Build options in JS:</span>
+<span class="kw">for</span>(<span class="kw">var</span> i=<span class="nm">1</span>; i&lt;=<span class="nm">31</span>; i++) sel.add(<span class="kw">new</span> <span class="fn">Option</span>(i,i));
+<span class="cm">// Combine on submit:</span>
+<span class="kw">new</span> <span class="fn">Date</span>(yr, mon<span class="nm">-1</span>, day);</pre>
+    </div>
+
+    <!-- 9. DATE OF BIRTH + AGE -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">🎂 Date of Birth + Age Calculator</span>
+        <span class="badge b-orange">type="date"</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Enter date of birth</span>
+        <input type="date" id="f-dob"
+          oninput="var v=this.value,o=document.getElementById('o-dob');
+            if(v){var dob=new Date(v+'T00:00:00'),now=new Date();
+              var age=now.getFullYear()-dob.getFullYear();
+              var bm=now.getMonth()-dob.getMonth();
+              if(bm<0||(bm===0&&now.getDate()<dob.getDate()))age--;
+              var next=new Date(now.getFullYear(),dob.getMonth(),dob.getDate());
+              if(next<now)next.setFullYear(now.getFullYear()+1);
+              var days=Math.round((next-now)/(864e5));
+              var mS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+              o.innerHTML='Age: <strong style=color:var(--accent);font-size:15px>'+age+'</strong> yrs'+
+                ' &nbsp;·&nbsp; DOB: '+dob.getDate()+' '+mS[dob.getMonth()]+' '+dob.getFullYear()+
+                '<br>Next birthday in <strong style=color:var(--warn)>'+days+'</strong> days';}
+            else o.textContent='—';"
+        />
+        <p class="inp-hint">Calculates exact age + days until next birthday</p>
+      </div>
+      <div class="parsed" id="o-dob">—</div>
+      <pre class="card-code"><span class="kw">var</span> age = now.yr - dob.yr;
+<span class="kw">if</span>(month_diff &lt; <span class="nm">0</span> ||
+  (month_diff===<span class="nm">0</span> && day &lt; dob.day))
+  age--; <span class="cm">// birthday not yet</span></pre>
+    </div>
+
+    <!-- 10. DATE RANGE -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">📊 Date Range — Check-in / Check-out</span>
+        <span class="badge b-red">Range</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Select from and to dates</span>
+        <div class="inp-row">
+          <div>
+            <p style="font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px">FROM</p>
+            <input type="date" id="rng-f" oninput="parseRange()"/>
+          </div>
+          <div>
+            <p style="font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px">TO</p>
+            <input type="date" id="rng-t" oninput="parseRange()"/>
+          </div>
+        </div>
+        <p class="inp-hint">Hotel booking, leave request, event registration</p>
+      </div>
+      <div class="parsed" id="o-range">—</div>
+      <pre class="card-code"><span class="kw">var</span> days = (tDate - fDate)
+  / (<span class="nm">1000</span>*<span class="nm">60</span>*<span class="nm">60</span>*<span class="nm">24</span>);
+<span class="cm">// Validate: to &gt;= from</span>
+<span class="kw">if</span>(days &lt; <span class="nm">0</span>) showError();</pre>
+    </div>
+
+    <!-- 11. CARD EXPIRY MM/YY -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">💳 Card Expiry — MM/YY</span>
+        <span class="badge b-red">Masked</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">Credit / debit card expiry date</span>
+        <input type="text" id="f-exp" placeholder="MM/YY" maxlength="5"
+          oninput="var raw=this.value.replace(/\D/g,'').slice(0,4);
+            this.value=raw.length>2?raw.slice(0,2)+'/'+raw.slice(2):raw;
+            var o=document.getElementById('o-exp');
+            if(raw.length===4){
+              var mm=+raw.slice(0,2),yy=2000+(+raw.slice(2));
+              var exp=new Date(yy,mm,0),now=new Date();
+              var mS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+              if(mm<1||mm>12){o.innerHTML='<span style=color:#f87171>✘ Invalid month</span>';this.className='is-invalid';}
+              else if(exp<now){o.innerHTML='<span style=color:#f87171>✘ Card expired ('+mS[mm-1]+' '+yy+')</span>';this.className='is-invalid';}
+              else{o.innerHTML='<span style=color:var(--accent)>✔ Valid until</span> '+mS[mm-1]+' '+yy;this.className='is-valid';}
+            }else{o.textContent='—';this.className='';}"
+        />
+        <p class="inp-hint">Auto-inserts / · checks if already expired</p>
+      </div>
+      <div class="parsed" id="o-exp">—</div>
+      <pre class="card-code"><span class="cm">// Strip → insert '/'</span>
+raw.slice(<span class="nm">0,2</span>) + <span class="st">'/'</span> + raw.slice(<span class="nm">2</span>);
+<span class="cm">// Expiry = last day of month:</span>
+<span class="kw">new</span> <span class="fn">Date</span>(year, month, <span class="nm">0</span>);</pre>
+    </div>
+
+    <!-- 12. APPOINTMENT SLOTS -->
+    <div class="fcard">
+      <div class="fcard-header">
+        <span class="fcard-title">🏥 Appointment Time Slot Picker</span>
+        <span class="badge b-purple">Slots</span>
+      </div>
+      <div class="fcard-body">
+        <span class="inp-label">1 — Pick a date</span>
+        <input type="date" id="f-appt" style="margin-bottom:10px" oninput="buildSlots(this.value)"/>
+        <span class="inp-label" id="slot-lbl" style="display:none">2 — Choose available slot</span>
+        <div class="slot-grid" id="slot-grid"></div>
+        <p class="inp-hint">Greyed slots = already booked · click to select</p>
+      </div>
+      <div class="parsed" id="o-appt">—</div>
+      <pre class="card-code"><span class="cm">// Generate available slots:</span>
+slots.<span class="fn">forEach</span>(<span class="kw">function</span>(t){
+  btn.onclick = <span class="kw">function</span>(){
+    confirm(date + <span class="st">' at '</span> + t);
+  };
+});</pre>
+    </div>
+
+  </div><!-- /form-grid -->
+</div><!-- /wrap -->
+
+<footer>// All outputs powered by <strong>inline JavaScript</strong> &nbsp;·&nbsp; Date Formats Reference</footer>
+
+<!-- ═══════ INLINE JAVASCRIPT ═══════ -->
+<script>
+/* ─── LIVE CLOCK ─────────────────────────────── */
+function pad(n){ return String(n).padStart(2,'0'); }
+function tick(){
+  var n=new Date();
+  document.getElementById('live-time').textContent =
+    pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
+}
+tick(); setInterval(tick, 1000);
+
+/* ─── DATE CONSTANTS ─────────────────────────── */
+var now = new Date();
+var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var MONTHS_S = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+/* ─── JS FORMAT FUNCTIONS ────────────────────── */
+var fmts = [
+  {
+    section:'// Core Built-in Methods',
+    title:'ISO 8601 — toISOString()', badge:'Intl', bc:'b-green',
+    val: function(){ return now.toISOString(); },
+    code:'<span class=kw>var</span> d = <span class=kw>new</span> <span class=fn>Date</span>();\nd.<span class=fn>toISOString</span>();\n<span class=cm>// "2024-07-15T08:30:00.000Z"</span>'
+  },
+  {
+    title:'UTC String — toUTCString()', badge:'UTC', bc:'b-blue',
+    val: function(){ return now.toUTCString(); },
+    code:'d.<span class=fn>toUTCString</span>();\n<span class=cm>// "Mon, 15 Jul 2024 08:30:00 GMT"</span>'
+  },
+  {
+    title:'Locale String — toLocaleString()', badge:'Local', bc:'b-yellow',
+    val: function(){ return now.toLocaleString(); },
+    code:'d.<span class=fn>toLocaleString</span>();\n<span class=cm>// locale-specific date + time</span>'
+  },
+  {
+    title:'Date Only — toLocaleDateString()', badge:'Local', bc:'b-yellow',
+    val: function(){ return now.toLocaleDateString(); },
+    code:'d.<span class=fn>toLocaleDateString</span>();\n<span class=cm>// "7/15/2024" (en-US)</span>'
+  },
+  {
+    title:'Time Only — toLocaleTimeString()', badge:'Local', bc:'b-yellow',
+    val: function(){ return now.toLocaleTimeString(); },
+    code:'d.<span class=fn>toLocaleTimeString</span>();\n<span class=cm>// "8:30:00 AM"</span>',
+    live:true
+  },
+  {
+    title:'Date String — toDateString()', badge:'Built-in', bc:'b-green',
+    val: function(){ return now.toDateString(); },
+    code:'d.<span class=fn>toDateString</span>();\n<span class=cm>// "Mon Jul 15 2024"</span>'
+  },
+  {
+    title:'Time String — toTimeString()', badge:'Built-in', bc:'b-green',
+    val: function(){ return now.toTimeString(); },
+    code:'d.<span class=fn>toTimeString</span>();\n<span class=cm>// "08:30:00 GMT+0545"</span>',
+    live:true
+  },
+  {
+    section:'// Custom Formats',
+    title:'DD/MM/YYYY — British', badge:'Custom', bc:'b-blue',
+    val: function(){
+      return pad(now.getDate())+'/'+pad(now.getMonth()+1)+'/'+now.getFullYear();
+    },
+    code:'<span class=fn>pad</span>(d.<span class=fn>getDate</span>())+<span class=st>"/"</span>\n  +<span class=fn>pad</span>(d.<span class=fn>getMonth</span>()+<span class=nm>1</span>)+<span class=st>"/"</span>\n  +d.<span class=fn>getFullYear</span>();'
+  },
+  {
+    title:'MM/DD/YYYY — American', badge:'Custom', bc:'b-blue',
+    val: function(){
+      return pad(now.getMonth()+1)+'/'+pad(now.getDate())+'/'+now.getFullYear();
+    },
+    code:'<span class=fn>pad</span>(d.<span class=fn>getMonth</span>()+<span class=nm>1</span>)+<span class=st>"/"</span>\n  +<span class=fn>pad</span>(d.<span class=fn>getDate</span>())+<span class=st>"/"</span>\n  +d.<span class=fn>getFullYear</span>();'
+  },
+  {
+    title:'YYYY-MM-DD — ISO Date', badge:'ISO', bc:'b-green',
+    val: function(){
+      return now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
+    },
+    code:'d.<span class=fn>getFullYear</span>()+<span class=st>"-"</span>\n  +<span class=fn>pad</span>(d.<span class=fn>getMonth</span>()+<span class=nm>1</span>)+<span class=st>"-"</span>\n  +<span class=fn>pad</span>(d.<span class=fn>getDate</span>());'
+  },
+  {
+    title:'Long English — Month D, YYYY', badge:'Custom', bc:'b-blue',
+    val: function(){
+      return MONTHS[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+    },
+    code:'MONTHS[d.<span class=fn>getMonth</span>()]\n  +<span class=st>" "</span>+d.<span class=fn>getDate</span>()\n  +<span class=st>", "</span>+d.<span class=fn>getFullYear</span>();'
+  },
+  {
+    title:'Full Weekday Date', badge:'Custom', bc:'b-blue',
+    val: function(){
+      return DAYS[now.getDay()]+', '+MONTHS[now.getMonth()]+' '+now.getDate()+' '+now.getFullYear();
+    },
+    code:'DAYS[d.<span class=fn>getDay</span>()]+<span class=st>", "</span>\n  +MONTHS[d.<span class=fn>getMonth</span>()]\n  +<span class=st>" "</span>+d.<span class=fn>getDate</span>()+<span class=st>" "</span>+d.<span class=fn>getFullYear</span>();'
+  },
+  {
+    title:'Ordinal Date — 1st, 2nd, 3rd…', badge:'Custom', bc:'b-blue',
+    val: function(){
+      var day=now.getDate(), v=day%100;
+      var sfx=['th','st','nd','rd'];
+      var s=sfx[(v-20)%10]||sfx[v]||sfx[0];
+      return DAYS[now.getDay()]+', '+day+s+' '+MONTHS[now.getMonth()]+' '+now.getFullYear();
+    },
+    code:'<span class=kw>var</span> sfx=[<span class=st>"th","st","nd","rd"</span>];\n<span class=kw>var</span> v=day%<span class=nm>100</span>;\nsfx[(v<span class=nm>-20</span>)%<span class=nm>10</span>]||sfx[v]||sfx[<span class=nm>0</span>]'
+  },
+  {
+    section:'// Time Formats',
+    title:'HH:MM:SS — 24-hour', badge:'Time', bc:'b-green',
+    val: function(){
+      return pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+    },
+    code:'<span class=fn>pad</span>(d.<span class=fn>getHours</span>())+<span class=st>":"</span>\n  +<span class=fn>pad</span>(d.<span class=fn>getMinutes</span>())+<span class=st>":"</span>\n  +<span class=fn>pad</span>(d.<span class=fn>getSeconds</span>());',
+    live:true
+  },
+  {
+    title:'hh:MM:SS AM/PM — 12-hour', badge:'Time', bc:'b-green',
+    val: function(){
+      var h=now.getHours(), ap=h>=12?'PM':'AM', h12=h%12||12;
+      return pad(h12)+':'+pad(now.getMinutes())+':'+pad(now.getSeconds())+' '+ap;
+    },
+    code:'<span class=kw>var</span> h12=h%<span class=nm>12</span>||<span class=nm>12</span>;\n<span class=kw>var</span> ap=h>=<span class=nm>12</span>?<span class=st>"PM"</span>:<span class=st>"AM"</span>;\n<span class=fn>pad</span>(h12)+<span class=st>":"</span>+<span class=fn>pad</span>(m)+<span class=st>":"</span>+<span class=fn>pad</span>(s)+<span class=st>" "</span>+ap',
+    live:true
+  },
+  {
+    section:'// Locale Options API',
+    title:'Long Locale — Weekday + Full Date', badge:'Intl', bc:'b-yellow',
+    val: function(){
+      return now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    },
+    code:'d.<span class=fn>toLocaleDateString</span>(<span class=st>"en-US"</span>, {\n  weekday: <span class=st>"long"</span>,\n  month: <span class=st>"long"</span>, day: <span class=st>"numeric"</span>,\n  year: <span class=st>"numeric"</span>\n});'
+  },
+  {
+    section:'// Timestamps',
+    title:'Unix Timestamp — Seconds', badge:'Unix', bc:'b-green',
+    val: function(){ return Math.floor(now.getTime()/1000); },
+    code:'<span class=fn>Math.floor</span>(d.<span class=fn>getTime</span>()/<span class=nm>1000</span>);\n<span class=cm>// seconds since 1 Jan 1970 UTC</span>'
+  },
+  {
+    title:'Unix Timestamp — Milliseconds', badge:'Unix', bc:'b-green',
+    val: function(){ return now.getTime(); },
+    code:'d.<span class=fn>getTime</span>(); <span class=cm>// or Date.now()</span>\n<span class=cm>// ms since epoch</span>',
+    live:true
+  },
+  {
+    section:'// Smart / Relative',
+    title:'Relative Time — "Time Ago"', badge:'Custom', bc:'b-blue',
+    val: function(){
+      var sec=Math.floor((Date.now()-now.getTime())/1000);
+      if(sec<5) return 'just now';
+      if(sec<60) return sec+' seconds ago';
+      var m=Math.floor(sec/60);
+      if(m<60) return m+' minute'+(m>1?'s':'')+' ago';
+      var h=Math.floor(m/60);
+      return h+' hour'+(h>1?'s':'')+' ago';
+    },
+    code:'<span class=kw>var</span> sec=<span class=fn>Math.floor</span>(\n  (Date.<span class=fn>now</span>()-d.<span class=fn>getTime</span>())/<span class=nm>1000</span>);\n<span class=cm>// "just now", "5 minutes ago"…</span>',
+    live:true
+  },
+];
+
+/* ─── RENDER JS CARDS ────────────────────────── */
+var grid = document.getElementById('js-grid');
+var liveNodes = [];
+
+fmts.forEach(function(f){
+  if(f.section){
+    var lbl = document.createElement('p');
+    lbl.className = 'section-label';
+    lbl.textContent = f.section;
+    grid.appendChild(lbl);
+  }
+  var c = document.createElement('div'); c.className='card';
+  c.innerHTML =
+    '<div class="card-header">'+
+      '<span class="card-title">'+f.title+'</span>'+
+      '<span class="badge '+f.bc+'">'+f.badge+'</span>'+
+    '</div>'+
+    '<div class="card-value" id="cv-'+fmts.indexOf(f)+'">'+f.val()+'</div>'+
+    '<pre class="card-code">'+f.code+'</pre>';
+  grid.appendChild(c);
+  if(f.live) liveNodes.push({el: document.getElementById('cv-'+fmts.indexOf(f)), fn: f.val});
+});
+
+/* ─── LIVE UPDATE ────────────────────────────── */
+setInterval(function(){
+  now = new Date();
+  liveNodes.forEach(function(n){ n.el.textContent = n.fn(); });
+}, 1000);
+
+/* ─── DROPDOWN POPULATION ─────────────────────── */
+(function(){
+  var sd=document.getElementById('sd-day');
+  var sm=document.getElementById('sd-mon');
+  var sy=document.getElementById('sd-yr');
+  for(var i=1;i<=31;i++) sd.add(new Option(i,i));
+  MONTHS.forEach(function(m,i){ sm.add(new Option(m,i+1)); });
+  var yr=now.getFullYear();
+  for(var y=yr;y>=yr-100;y--) sy.add(new Option(y,y));
+})();
+
+/* ─── DROPDOWN PARSE ──────────────────────────── */
+function parseDrop(){
+  var dd=+document.getElementById('sd-day').value;
+  var mm=+document.getElementById('sd-mon').value;
+  var yy=+document.getElementById('sd-yr').value;
+  var o=document.getElementById('o-drop');
+  if(dd&&mm&&yy){
+    var d=new Date(yy,mm-1,dd);
+    var ok=d.getMonth()===mm-1;
+    o.innerHTML=ok
+      ?'<span style="color:var(--accent)">✔</span> '+DAYS[d.getDay()]+', '+dd+' '+MONTHS_S[mm-1]+' '+yy
+      :'<span style="color:#f87171">✘ Invalid (e.g. Feb 30)</span>';
+  } else o.textContent='—';
+}
+
+/* ─── THREE-FIELD PARSE ──────────────────────── */
+function parse3(){
+  var dd=+document.getElementById('f3-dd').value||0;
+  var mm=+document.getElementById('f3-mm').value||0;
+  var yy=+document.getElementById('f3-yy').value||0;
+  var o=document.getElementById('o-3fields');
+  if(dd&&mm&&yy&&yy>1000){
+    var d=new Date(yy,mm-1,dd);
+    var ok=d.getFullYear()===yy&&d.getMonth()===mm-1&&d.getDate()===dd;
+    o.innerHTML=ok
+      ?'<span style="color:var(--accent)">✔ Valid:</span> '+dd+' '+MONTHS_S[mm-1]+' '+yy+
+        ' &nbsp;·&nbsp; ISO: '+yy+'-'+pad(mm)+'-'+pad(dd)
+      :'<span style="color:#f87171">✘ Invalid date (check day/month)</span>';
+  } else o.textContent='—';
+}
+
+/* ─── DATE RANGE ─────────────────────────────── */
+function parseRange(){
+  var f=document.getElementById('rng-f').value;
+  var t=document.getElementById('rng-t').value;
+  var o=document.getElementById('o-range');
+  if(f&&t){
+    var df=new Date(f+'T00:00:00'), dt=new Date(t+'T00:00:00');
+    var days=Math.round((dt-df)/864e5);
+    if(days<0){
+      o.innerHTML='<span style="color:#f87171">✘ End date must be after start</span>';
+    } else {
+      var fmt=function(d){ return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); };
+      o.innerHTML='<span style="color:var(--accent)">✔</span> '+fmt(df)+' → '+fmt(dt)+
+        ' &nbsp;<strong style="color:var(--warn)">('+days+' day'+(days!==1?'s':'')+')</strong>';
+    }
+  } else o.textContent='—';
+}
+
+/* ─── APPOINTMENT SLOTS ──────────────────────── */
+function buildSlots(v){
+  var wrap=document.getElementById('slot-grid');
+  var lbl=document.getElementById('slot-lbl');
+  var o=document.getElementById('o-appt');
+  wrap.innerHTML=''; o.textContent='—';
+  if(!v){ wrap.style.display='none'; lbl.style.display='none'; return; }
+  var sd=new Date(v+'T00:00:00');
+  var isWknd=sd.getDay()===0||sd.getDay()===6;
+  var all=isWknd
+    ?['10:00','10:30','11:00','11:30','12:00','12:30']
+    :['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30'];
+  var booked=[all[1],all[3],all[5]];
+  var selectedBtn=null;
+
+  all.forEach(function(slot){
+    var btn=document.createElement('button');
+    var bkd=booked.indexOf(slot)>-1;
+    btn.className='slot-btn';
+    btn.innerHTML=slot+(bkd?'<br><span style="font-size:8px;opacity:.5">booked</span>':'');
+    btn.style.borderColor=bkd?'var(--border)':'var(--warn)';
+    btn.style.background=bkd?'rgba(255,255,255,.02)':'rgba(255,176,32,.07)';
+    btn.style.color=bkd?'var(--muted)':'var(--warn)';
+    btn.style.cursor=bkd?'not-allowed':'pointer';
+    btn.disabled=bkd;
+    if(!bkd){
+      btn.onmouseenter=function(){ if(btn!==selectedBtn){btn.style.background='rgba(255,176,32,.15)';} };
+      btn.onmouseleave=function(){ if(btn!==selectedBtn){btn.style.background='rgba(255,176,32,.07)';} };
+      btn.onclick=function(){
+        if(selectedBtn){
+          selectedBtn.style.background='rgba(255,176,32,.07)';
+          selectedBtn.style.color='var(--warn)';
+          selectedBtn.style.borderColor='var(--warn)';
+        }
+        selectedBtn=btn;
+        btn.style.background='var(--warn)';
+        btn.style.color='#0c0f14';
+        btn.style.borderColor='var(--warn)';
+        o.innerHTML='<span style="color:var(--accent)">✔ Booked:</span> '+
+          DAYS[sd.getDay()]+', '+sd.getDate()+' '+MONTHS_S[sd.getMonth()]+' '+sd.getFullYear()+
+          ' at <strong style="color:var(--warn)">'+slot+'</strong>';
+      };
+    }
+    wrap.appendChild(btn);
+  });
+
+  wrap.style.display='grid'; lbl.style.display='block';
+  o.textContent='Select a slot above';
+}
+</script>
+</body>
+</html>
