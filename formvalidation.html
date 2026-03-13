@@ -24,10 +24,171 @@
       input[type="submit"]:hover {
         background-color: #45a049;
       }
+
+      /* ══════════════════════════════════════
+           LOGIN SCREEN
+        ══════════════════════════════════════ */
+        #loginScreen {
+            position: relative; z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .login-title {
+            font-size: 44px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+            margin-bottom: 8px;
+            animation: glow 2s ease-in-out infinite;
+            letter-spacing: 2px;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: rgba(0, 255, 255, 0.6);
+            margin-bottom: 36px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 16px;
+            padding: 40px 44px;
+            width: 360px;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.15), inset 0 0 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            color: rgba(0, 255, 255, 0.8);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 15px;
+            font-family: 'Courier New', monospace;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .input-group input:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.12), 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+
+        .input-group input::placeholder { color: rgba(255,255,255,0.2); }
+
+        .error-msg {
+            min-height: 22px;
+            color: #ff4466;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px #ff4466;
+            animation: shake 0.3s ease;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.4s;
+        }
+
+        .login-btn:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(255, 0, 255, 0.7); }
+        .login-btn:hover::before { transform: translateX(100%); }
+        .login-btn:active { transform: scale(0.98); }
+
+        .login-hint {
+            margin-top: 20px;
+            text-align: center;
+            color: rgba(255,255,255,0.2);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* login success flash */
+        .login-box.success {
+            animation: successFlash 0.5s ease forwards;
+        }
+
+        @keyframes successFlash {
+            0%   { border-color: rgba(0,255,255,0.3); box-shadow: 0 0 40px rgba(0,255,255,0.15); }
+            50%  { border-color: #00ff88; box-shadow: 0 0 60px rgba(0,255,136,0.5); }
+            100% { opacity: 0; transform: scale(1.04); }
+        }
+
     </style>
   </head>
 
   <body>
+<!-- ══════════════════════════════════════
+         LOGIN SCREEN  (shown first)
+    ══════════════════════════════════════ -->
+    <div id="loginScreen">
+        <div class="login-title">⚡ NEON RUNNER ⚡</div>
+        <div class="login-subtitle">Access Required</div>
+
+        <div class="login-box" id="loginBox">
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="loginUser" placeholder="Enter username" autocomplete="off"
+                    onkeydown="if(event.key==='Enter') document.getElementById('loginPass').focus()"/>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="loginPass" placeholder="Enter password"
+                    onkeydown="if(event.key==='Enter') doLogin()"/>
+            </div>
+            <div class="error-msg" id="loginError"></div>
+            <button class="login-btn" onclick="doLogin()">🔓 Login to Play</button>
+            <div class="login-hint">Hint: use your game credentials</div>
+        </div>
+    </div>
+
+     
     <div>
       <form name="myForm" onsubmit="return validateForm();">
         Name: <input type="text" name="name" id="name" /><br /><br />
@@ -49,6 +210,47 @@
     </div>
 
     <script>
+ /* ============================================================
+           LOGIN LOGIC
+        ============================================================ */
+        const VALID_USER = "admin";
+        const VALID_PASS = "admin";
+
+        function doLogin() {
+            var user  = document.getElementById("loginUser").value.trim();
+            var pass  = document.getElementById("loginPass").value;
+            var errEl = document.getElementById("loginError");
+            var box   = document.getElementById("loginBox");
+
+            // Clear previous error
+            errEl.textContent = "";
+
+            if (user === "" || pass === "") {
+                errEl.textContent = "⚠ Please fill in both fields.";
+                return;
+            }
+
+            if (user === VALID_USER && pass === VALID_PASS) {
+                // Success — flash animation then show start screen
+                box.classList.add("success");
+                setTimeout(function() {
+                    document.getElementById("loginScreen").style.display = "none";
+                    document.getElementById("startScreen").style.display  = "block";
+                }, 500);
+            } else {
+                // Wrong credentials — shake and show error
+                errEl.textContent = "✘ Invalid username or password.";
+                document.getElementById("loginPass").value = "";
+                document.getElementById("loginPass").focus();
+                // Re-trigger shake animation
+                errEl.style.animation = "none";
+                setTimeout(function() { errEl.style.animation = "shake 0.3s ease"; }, 10);
+            }
+        }
+
+
+
+
       function validateForm() {
         const name = document.myForm.name.value;
         const email = document.myForm.email.value;
