@@ -159,7 +159,7 @@
             50%  { border-color: #00ff88; box-shadow: 0 0 60px rgba(0,255,136,0.5); }
             100% { opacity: 0; transform: scale(1.04); }
         }
-
+        #formscreen { display: none; }
     </style>
   </head>
 
@@ -189,7 +189,7 @@
     </div>
 
      
-    <div>
+    <div id="formscreen">
       <form name="myForm" onsubmit="return validateForm();">
         Name: <input type="text" name="name" id="name" /><br /><br />
 
@@ -235,7 +235,7 @@
                 box.classList.add("success");
                 setTimeout(function() {
                     document.getElementById("loginScreen").style.display = "none";
-                    document.getElementById("startScreen").style.display  = "block";
+                    document.getElementById("formscreen").style.display  = "block";
                 }, 500);
             } else {
                 // Wrong credentials — shake and show error
@@ -260,9 +260,9 @@
         const date = document.myForm.date.value;
 
         const namePattern = /^[a-zA-Z\s]+$/;
-        const emailPattern = /^[^\s@]+@gmalil\.com+$/;
+        const emailPattern = /^[^\s@]+@gmail\.com+$/;
         const passwordPattern = /^.{6,}$/;
-        const phonePattern = /^\9[6-8]\d{8}$/;
+        const phonePattern = /^\9[6-8]\d{3}$/;
         const agePattern = /^(1[8-9]|[2-9]\d)$/;
         const datePattern = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
