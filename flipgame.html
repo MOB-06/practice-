@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Match — HARD MODE</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ── BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --neon-cyan:   #00f5ff;
+    --neon-purple: #b400ff;
+    --neon-pink:   #ff006e;
+    --neon-green:  #00ff88;
+    --neon-gold:   #ffd700;
+    --bg-dark:     #080b14;
+    --bg-card:     #0d1426;
+    --bg-panel:    #0a1020;
+    --border-glow: rgba(0,245,255,0.35);
+    --text-main:   #e8f4ff;
+  }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 48px;
+  }
+
+  /* animated grid background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* scanline overlay */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: relative; z-index: 2;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .header-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    letter-spacing: 6px;
+    color: var(--neon-purple);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .header h1 {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(26px, 5vw, 44px);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 18px rgba(0,245,255,0.5));
+  }
+
+  /* ── HUD / STATS BAR ── */
+  .hud {
+    position: relative; z-index: 2;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hud-block {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-glow);
+    border-radius: 10px;
+    padding: 10px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 90px;
+    box-shadow: 0 0 12px rgba(0,245,255,0.1), inset 0 0 20px rgba(0,0,0,0.3);
+  }
+
+  .hud-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(232,244,255,0.4);
+  }
+
+  .hud-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+    transition: color 0.3s;
+  }
+
+  #timerValue.danger { color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
+  #movesValue.good   { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
+
+  /* ── BOARD ── */
+  #gameBoard {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 520px;
+    width: 100%;
+  }
+
+  /* ── CARD ── */
+  .card-wrapper {
+    width: 100%;
+    aspect-ratio: 1;
+    perspective: 800px;
+    cursor: pointer;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .card-wrapper.flipped .card-inner { transform: rotateY(180deg); }
+  .card-wrapper.matched .card-inner { transform: rotateY(180deg); }
+
+  .card-face {
+    position: absolute; inset: 0;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* BACK face */
+  .card-back {
+    background: linear-gradient(145deg, #0e1f3d, #0a1426);
+    border: 1px solid rgba(0,245,255,0.2);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5), inset 0 0 30px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+
+  .card-back::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(0,245,255,0.03) 12px, rgba(0,245,255,0.03) 13px),
+      repeating-linear-gradient(-45deg, transparent, transparent 12px, rgba(180,0,255,0.03) 12px, rgba(180,0,255,0.03) 13px);
+    border-radius: 12px;
+  }
+
+  .card-back-icon {
+    font-size: 28px;
+    opacity: 0.25;
+    filter: blur(1px);
+    user-select: none;
+  }
+
+  /* FRONT face */
+  .card-front {
+    transform: rotateY(180deg);
+    background: linear-gradient(145deg, #111e3a, #0d1830);
+    border: 1px solid rgba(0,245,255,0.45);
+    box-shadow:
+      0 0 20px rgba(0,245,255,0.2),
+      inset 0 0 30px rgba(0,245,255,0.06);
+    font-size: clamp(28px, 7vw, 38px);
+    user-select: none;
+  }
+
+  /* MATCHED state */
+  .card-wrapper.matched .card-front {
+    background: linear-gradient(145deg, #00301a, #001f12);
+    border-color: var(--neon-green);
+    box-shadow:
+      0 0 24px rgba(0,255,136,0.4),
+      0 0 48px rgba(0,255,136,0.15),
+      inset 0 0 20px rgba(0,255,136,0.08);
+    animation: matchPulse 0.6s ease-out;
+  }
+
+  @keyframes matchPulse {
+    0%   { transform: rotateY(180deg) scale(1); }
+    40%  { transform: rotateY(180deg) scale(1.12); }
+    100% { transform: rotateY(180deg) scale(1); }
+  }
+
+  /* hover on unflipped */
+  .card-wrapper:not(.flipped):not(.matched):hover .card-back {
+    border-color: rgba(0,245,255,0.5);
+    box-shadow: 0 0 16px rgba(0,245,255,0.25), inset 0 0 30px rgba(0,0,0,0.4);
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+  }
+
+  /* ── BOTTOM CONTROLS ── */
+  .controls {
+    position: relative; z-index: 2;
+    margin-top: 28px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    color: #000;
+    box-shadow: 0 0 20px rgba(0,245,255,0.3);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 32px rgba(0,245,255,0.6);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* ── STARS ── */
+  .stars {
+    position: relative; z-index: 2;
+    display: flex;
+    gap: 6px;
+    margin-top: 14px;
+    font-size: 24px;
+    filter: drop-shadow(0 0 6px var(--neon-gold));
+  }
+
+  .star { transition: opacity 0.3s; }
+  .star.dim { opacity: 0.18; filter: none; }
+
+  /* ── WIN OVERLAY ── */
+  #winOverlay {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 100;
+    background: rgba(8,11,20,0.88);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  #winOverlay.show {
+    display: flex;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .win-card {
+    background: linear-gradient(145deg, #0a1428, #0d1c35);
+    border: 1px solid rgba(0,245,255,0.4);
+    border-radius: 20px;
+    padding: 48px 52px;
+    text-align: center;
+    box-shadow:
+      0 0 60px rgba(0,245,255,0.2),
+      0 0 120px rgba(180,0,255,0.1);
+    max-width: 420px;
+    width: 90%;
+    animation: slideUp 0.5s cubic-bezier(0.2,0.8,0.3,1);
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  .win-trophy { font-size: 64px; margin-bottom: 12px; animation: bounce 0.8s 0.3s both; }
+
+  @keyframes bounce {
+    0%   { transform: scale(0); }
+    60%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .win-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--neon-gold), var(--neon-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .win-stats {
+    margin: 20px 0 28px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .win-stat {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+
+  .win-stat-val {
+    font-family: 'Orbitron', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+  }
+
+  .win-stat-lbl {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.45;
+  }
+
+  .win-stars { font-size: 32px; margin-bottom: 24px; }
+
+  /* ── PARTICLES (match burst) ── */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 14px;
+    z-index: 99;
+    animation: particleFly 0.8s ease-out forwards;
+  }
+
+  @keyframes particleFly {
+    0%   { opacity: 1; transform: translate(0,0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+  }
+
+  /* ── STATUS TEXT ── */
+  #status {
+    position: relative; z-index: 2;
+    height: 22px;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--neon-pink);
+    margin-top: 14px;
+    text-shadow: 0 0 8px var(--neon-pink);
+    transition: opacity 0.3s;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 480px) {
+    #gameBoard { gap: 8px; }
+    .hud-block  { padding: 8px 14px; min-width: 72px; }
+    .hud-value  { font-size: 18px; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-sub">⬡ Neural Challenge Protocol ⬡</div>
+  <h1>Memory.EXE</h1>
+</div>
+
+<!-- HUD -->
+<div class="hud">
+  <div class="hud-block">
+    <span class="hud-label">Time</span>
+    <span class="hud-value" id="timerValue">0:00</span>
+  </div>
+  <div class="hud-block">
+    <span class="hud-label">Moves</span>
+    <span class="hud-value" id="movesValue">0</span>
+  </div>
+  <div class="hud-block">
+    <span class="hud-label">Matches</span>
+    <span class="hud-value" id="matchesValue">0/8</span>
+  </div>
+</div>
+
+<!-- STARS -->
+<div class="stars">
+  <span class="star" id="star1">★</span>
+  <span class="star" id="star2">★</span>
+  <span class="star" id="star3">★</span>
+</div>
+
+<!-- BOARD -->
+<div id="gameBoard"></div>
+
+<!-- STATUS -->
+<p id="status"></p>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <button class="btn btn-primary" onclick="restartGame()">⟳ &nbsp;New Game</button>
+</div>
+
+<!-- WIN OVERLAY -->
+<div id="winOverlay">
+  <div class="win-card">
+    <div class="win-trophy">🏆</div>
+    <div class="win-title">SYSTEM CLEARED</div>
+    <div id="winStars" class="win-stars"></div>
+    <div class="win-stats">
+      <div class="win-stat">
+        <span class="win-stat-val" id="winTime">—</span>
+        <span class="win-stat-lbl">Time</span>
+      </div>
+      <div class="win-stat">
+        <span class="win-stat-val" id="winMoves">—</span>
+        <span class="win-stat-lbl">Moves</span>
+      </div>
+      <div class="win-stat">
+        <span class="win-stat-val" id="winRating">—</span>
+        <span class="win-stat-lbl">Rating</span>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="restartGame(); closeWin()">⟳ &nbsp;Play Again</button>
+  </div>
+</div>
+
+<script>
+  // ─── DATA ───────────────────────────────────────────────────────────────
+  const SYMBOLS = [
+    "🍎","🚀","🐉","⚡","🦊","🎯","💎","🌊",
+    "🍎","🚀","🐉","⚡","🦊","🎯","💎","🌊"
+  ];
+
+  // ─── STATE ──────────────────────────────────────────────────────────────
+  let firstCard = null, secondCard = null;
+  let lockBoard  = false;
+  let moves      = 0;
+  let matches    = 0;
+  let timerSec   = 0;
+  let timerID    = null;
+  let gameActive = false;
+
+  // ─── ELEMENTS ───────────────────────────────────────────────────────────
+  const board        = document.getElementById("gameBoard");
+  const timerEl      = document.getElementById("timerValue");
+  const movesEl      = document.getElementById("movesValue");
+  const matchesEl    = document.getElementById("matchesValue");
+  const statusEl     = document.getElementById("status");
+  const star1        = document.getElementById("star1");
+  const star2        = document.getElementById("star2");
+  const star3        = document.getElementById("star3");
+  const winOverlay   = document.getElementById("winOverlay");
+
+  // ─── TIMER ──────────────────────────────────────────────────────────────
+  function startTimer() {
+    timerID = setInterval(() => {
+      timerSec++;
+      const m = String(Math.floor(timerSec / 60));
+      const s = String(timerSec % 60).padStart(2, "0");
+      timerEl.textContent = `${m}:${s}`;
+      timerEl.classList.toggle("danger", timerSec >= 90);
+      updateStars();
+    }, 1000);
+  }
+
+  function stopTimer() { clearInterval(timerID); timerID = null; }
+  function resetTimer() { stopTimer(); timerSec = 0; timerEl.textContent = "0:00"; timerEl.classList.remove("danger"); }
+
+  // ─── STARS ──────────────────────────────────────────────────────────────
+  function updateStars() {
+    const stars = getStars();
+    [star1, star2, star3].forEach((s, i) => s.classList.toggle("dim", i >= stars));
+  }
+
+  function getStars() {
+    // 3 stars: ≤16 moves & ≤60s | 2 stars: ≤24 moves & ≤120s | else 1
+    if (moves <= 16 && timerSec <= 60)  return 3;
+    if (moves <= 24 && timerSec <= 120) return 2;
+    return 1;
+  }
+
+  // ─── BUILD BOARD ────────────────────────────────────────────────────────
+  function createBoard() {
+    board.innerHTML = "";
+    const shuffled = [...SYMBOLS].sort(() => Math.random() - 0.5);
+
+    shuffled.forEach(symbol => {
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("card-wrapper");
+
+      wrapper.innerHTML = `
+        <div class="card-inner">
+          <div class="card-face card-back">
+            <span class="card-back-icon">✦</span>
+          </div>
+          <div class="card-face card-front">${symbol}</div>
+        </div>`;
+
+      wrapper.dataset.symbol = symbol;
+      wrapper.addEventListener("click", flipCard);
+      board.appendChild(wrapper);
+    });
+  }
+
+  // ─── FLIP ───────────────────────────────────────────────────────────────
+  function flipCard() {
+    if (lockBoard) return;
+    if (this === firstCard) return;
+    if (this.classList.contains("matched")) return;
+    if (this.classList.contains("flipped")) return;
+
+    // Start timer on first flip
+    if (!gameActive) { gameActive = true; startTimer(); }
+
+    this.classList.add("flipped");
+
+    if (!firstCard) { firstCard = this; return; }
+
+    secondCard = this;
+    moves++;
+    movesEl.textContent = moves;
+    movesEl.classList.toggle("good", moves <= 16);
+    updateStars();
+    checkMatch();
+  }
+
+  // ─── CHECK MATCH ────────────────────────────────────────────────────────
+  function checkMatch() {
+    const isMatch = firstCard.dataset.symbol === secondCard.dataset.symbol;
+
+    if (isMatch) {
+      firstCard.classList.add("matched");
+      secondCard.classList.add("matched");
+      spawnParticles(firstCard);
+      spawnParticles(secondCard);
+      matches++;
+      matchesEl.textContent = `${matches}/8`;
+      statusEl.textContent = "⚡ MATCH!";
+      setTimeout(() => { statusEl.textContent = ""; }, 900);
+      resetTurn();
+      if (matches === 8) setTimeout(showWin, 500);
+    } else {
+      statusEl.textContent = "✗ No Match";
+      lockBoard = true;
+      setTimeout(() => {
+        firstCard.classList.remove("flipped");
+        secondCard.classList.remove("flipped");
+        statusEl.textContent = "";
+        resetTurn();
+      }, 1000);
+    }
+  }
+
+  function resetTurn() {
+    [firstCard, secondCard] = [null, null];
+    lockBoard = false;
+  }
+
+  // ─── PARTICLES ──────────────────────────────────────────────────────────
+  function spawnParticles(card) {
+    const rect = card.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top  + rect.height / 2;
+    const emojis = ["✦","★","◆","●","▲"];
+
+    for (let i = 0; i < 8; i++) {
+      const p = document.createElement("div");
+      p.classList.add("particle");
+      p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      const angle = (Math.PI * 2 * i) / 8;
+      const dist  = 50 + Math.random() * 50;
+      p.style.left = cx + "px";
+      p.style.top  = cy + "px";
+      p.style.setProperty("--dx", Math.cos(angle) * dist + "px");
+      p.style.setProperty("--dy", Math.sin(angle) * dist + "px");
+      p.style.color = ["#00f5ff","#00ff88","#ffd700","#ff006e"][Math.floor(Math.random()*4)];
+      document.body.appendChild(p);
+      p.addEventListener("animationend", () => p.remove());
+    }
+  }
+
+  // ─── WIN ────────────────────────────────────────────────────────────────
+  function showWin() {
+    stopTimer();
+    const s = getStars();
+    const m = String(Math.floor(timerSec / 60));
+    const sec = String(timerSec % 60).padStart(2,"0");
+    const ratings = ["ROOKIE","SKILLED","ELITE"];
+
+    document.getElementById("winTime").textContent   = `${m}:${sec}`;
+    document.getElementById("winMoves").textContent  = moves;
+    document.getElementById("winRating").textContent = ratings[s-1];
+    document.getElementById("winStars").textContent  = "★".repeat(s) + "☆".repeat(3-s);
+    winOverlay.classList.add("show");
+  }
+
+  function closeWin() { winOverlay.classList.remove("show"); }
+
+  // ─── RESTART ────────────────────────────────────────────────────────────
+  function restartGame() {
+    stopTimer(); resetTimer();
+    moves = 0; matches = 0; gameActive = false;
+    movesEl.textContent  = "0";
+    matchesEl.textContent = "0/8";
+    statusEl.textContent  = "";
+    [star1,star2,star3].forEach(s => s.classList.remove("dim"));
+    createBoard();
+  }
+
+  // ─── INIT ───────────────────────────────────────────────────────────────
+  createBoard();
+</script>
+</body>
+</html>
